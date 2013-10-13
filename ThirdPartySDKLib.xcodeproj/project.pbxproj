@@ -1,0 +1,247 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; };
+		80511981180AFA97007E5EA0 /* ThirdPartySDKLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */; };
+		80511983180AFA97007E5EA0 /* ThirdPartySDKLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		80511976180AFA97007E5EA0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				80511981180AFA97007E5EA0 /* ThirdPartySDKLib.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8051197B180AFA97007E5EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThirdPartySDKLib-Prefix.pch"; sourceTree = "<group>"; };
+		80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdPartySDKLib.h; sourceTree = "<group>"; };
+		80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdPartySDKLib.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		80511975180AFA97007E5EA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8051196F180AFA97007E5EA0 = {
+			isa = PBXGroup;
+			children = (
+				8051197D180AFA97007E5EA0 /* ThirdPartySDKLib */,
+				8051197A180AFA97007E5EA0 /* Frameworks */,
+				80511979180AFA97007E5EA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		80511979180AFA97007E5EA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8051197A180AFA97007E5EA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8051197B180AFA97007E5EA0 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8051197D180AFA97007E5EA0 /* ThirdPartySDKLib */ = {
+			isa = PBXGroup;
+			children = (
+				80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */,
+				80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */,
+				8051197E180AFA97007E5EA0 /* Supporting Files */,
+			);
+			path = ThirdPartySDKLib;
+			sourceTree = "<group>";
+		};
+		8051197E180AFA97007E5EA0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		80511977180AFA97007E5EA0 /* ThirdPartySDKLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80511986180AFA97007E5EA0 /* Build configuration list for PBXNativeTarget "ThirdPartySDKLib" */;
+			buildPhases = (
+				80511974180AFA97007E5EA0 /* Sources */,
+				80511975180AFA97007E5EA0 /* Frameworks */,
+				80511976180AFA97007E5EA0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ThirdPartySDKLib;
+			productName = ThirdPartySDKLib;
+			productReference = 80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		80511970180AFA97007E5EA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = MeYouGames;
+			};
+			buildConfigurationList = 80511973180AFA97007E5EA0 /* Build configuration list for PBXProject "ThirdPartySDKLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8051196F180AFA97007E5EA0;
+			productRefGroup = 80511979180AFA97007E5EA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				80511977180AFA97007E5EA0 /* ThirdPartySDKLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		80511974180AFA97007E5EA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80511983180AFA97007E5EA0 /* ThirdPartySDKLib.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		80511984180AFA97007E5EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		80511985180AFA97007E5EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		80511987180AFA97007E5EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		80511988180AFA97007E5EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		80511973180AFA97007E5EA0 /* Build configuration list for PBXProject "ThirdPartySDKLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80511984180AFA97007E5EA0 /* Debug */,
+				80511985180AFA97007E5EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80511986180AFA97007E5EA0 /* Build configuration list for PBXNativeTarget "ThirdPartySDKLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80511987180AFA97007E5EA0 /* Debug */,
+				80511988180AFA97007E5EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 80511970180AFA97007E5EA0 /* Project object */;
+}
