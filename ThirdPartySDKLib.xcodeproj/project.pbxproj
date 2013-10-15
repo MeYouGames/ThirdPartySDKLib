@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; };
-		80511981180AFA97007E5EA0 /* ThirdPartySDKLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */; };
-		80511983180AFA97007E5EA0 /* ThirdPartySDKLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */; };
+		8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198C180AFADA007E5EA0 /* TangoManager.mm */; };
+		80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */; };
+		805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805119A6180B0D00007E5EA0 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -19,7 +20,6 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				80511981180AFA97007E5EA0 /* ThirdPartySDKLib.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -29,8 +29,12 @@
 		80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8051197B180AFA97007E5EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThirdPartySDKLib-Prefix.pch"; sourceTree = "<group>"; };
-		80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdPartySDKLib.h; sourceTree = "<group>"; };
-		80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdPartySDKLib.m; sourceTree = "<group>"; };
+		8051198A180AFADA007E5EA0 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		8051198B180AFADA007E5EA0 /* TangoManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = TangoManager.h; sourceTree = "<group>"; };
+		8051198C180AFADA007E5EA0 /* TangoManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TangoManager.mm; sourceTree = "<group>"; };
+		8051198D180AFADA007E5EA0 /* TangoSDKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangoSDKBridge.h; sourceTree = "<group>"; };
+		8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TangoSDKBridge.mm; sourceTree = "<group>"; };
+		805119A6180B0D00007E5EA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */,
 				8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +70,7 @@
 		8051197A180AFA97007E5EA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				805119A6180B0D00007E5EA0 /* UIKit.framework */,
 				8051197B180AFA97007E5EA0 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -73,8 +79,7 @@
 		8051197D180AFA97007E5EA0 /* ThirdPartySDKLib */ = {
 			isa = PBXGroup;
 			children = (
-				80511980180AFA97007E5EA0 /* ThirdPartySDKLib.h */,
-				80511982180AFA97007E5EA0 /* ThirdPartySDKLib.m */,
+				80511989180AFADA007E5EA0 /* Tango */,
 				8051197E180AFA97007E5EA0 /* Supporting Files */,
 			);
 			path = ThirdPartySDKLib;
@@ -86,6 +91,18 @@
 				8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		80511989180AFADA007E5EA0 /* Tango */ = {
+			isa = PBXGroup;
+			children = (
+				8051198D180AFADA007E5EA0 /* TangoSDKBridge.h */,
+				8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */,
+				8051198B180AFADA007E5EA0 /* TangoManager.h */,
+				8051198C180AFADA007E5EA0 /* TangoManager.mm */,
+				8051198A180AFADA007E5EA0 /* SynthesizeSingleton.h */,
+			);
+			path = Tango;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +156,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80511983180AFA97007E5EA0 /* ThirdPartySDKLib.m in Sources */,
+				8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */,
+				80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,24 +218,71 @@
 		80511987180AFA97007E5EA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+					"COCOS2D_DEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../GameFoundation/CocosDenshion/include\"",
+					"\"$(SRCROOT)/../GameFoundation/extensions\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";
 			};
 			name = Debug;
 		};
 		80511988180AFA97007E5EA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../GameFoundation/CocosDenshion/include\"",
+					"\"$(SRCROOT)/../GameFoundation/extensions\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";
 			};
 			name = Release;
 		};
@@ -240,6 +305,7 @@
 				80511988180AFA97007E5EA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
