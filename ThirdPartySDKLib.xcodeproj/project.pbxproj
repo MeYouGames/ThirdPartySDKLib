@@ -7,13 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; };
+		326CA123180E91AA006AFE4E /* TangoManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198C180AFADA007E5EA0 /* TangoManager.mm */; };
+		326CA124180E91AA006AFE4E /* TangoSDKBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */; };
+		326CA126180E91AA006AFE4E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BF180E79B1002EF07F /* CoreMedia.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		326CA127180E91AA006AFE4E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		326CA128180E91AA006AFE4E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BB180E7981002EF07F /* AdSupport.framework */; };
+		326CA129180E91AA006AFE4E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B9180E797B002EF07F /* CoreGraphics.framework */; };
+		326CA12A180E91AA006AFE4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B7180E7973002EF07F /* AVFoundation.framework */; };
+		326CA12B180E91AA006AFE4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B5180E796B002EF07F /* SystemConfiguration.framework */; };
+		326CA12C180E91AA006AFE4E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B3180E7962002EF07F /* MessageUI.framework */; };
+		326CA12D180E91AA006AFE4E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B1180E7959002EF07F /* Security.framework */; };
+		326CA12E180E91AA006AFE4E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805119A6180B0D00007E5EA0 /* UIKit.framework */; };
+		326CA12F180E91AA006AFE4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		326CA20B180E96F1006AFE4E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326CA20A180E96F1006AFE4E /* CoreVideo.framework */; };
+		3277D5B2180E795A002EF07F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B1180E7959002EF07F /* Security.framework */; };
+		3277D5B4180E7962002EF07F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B3180E7962002EF07F /* MessageUI.framework */; };
+		3277D5B6180E796B002EF07F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B5180E796B002EF07F /* SystemConfiguration.framework */; };
+		3277D5B8180E7973002EF07F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B7180E7973002EF07F /* AVFoundation.framework */; };
+		3277D5BA180E797B002EF07F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5B9180E797B002EF07F /* CoreGraphics.framework */; };
+		3277D5BC180E7982002EF07F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BB180E7981002EF07F /* AdSupport.framework */; };
+		3277D5BE180E79A2002EF07F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		3277D5C0180E79B1002EF07F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BF180E79B1002EF07F /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198C180AFADA007E5EA0 /* TangoManager.mm */; };
 		80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */; };
 		805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805119A6180B0D00007E5EA0 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		326CA130180E91AA006AFE4E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80511976180AFA97007E5EA0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -26,6 +56,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		326CA134180E91AA006AFE4E /* libThirdPartySDKLib_Tango.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib_Tango.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		326CA20A180E96F1006AFE4E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		3277D5B1180E7959002EF07F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3277D5B3180E7962002EF07F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3277D5B5180E796B002EF07F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3277D5B7180E7973002EF07F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3277D5B9180E797B002EF07F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3277D5BB180E7981002EF07F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3277D5BF180E79B1002EF07F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8051197B180AFA97007E5EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThirdPartySDKLib-Prefix.pch"; sourceTree = "<group>"; };
@@ -38,10 +78,36 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		326CA125180E91AA006AFE4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				326CA20B180E96F1006AFE4E /* CoreVideo.framework in Frameworks */,
+				326CA126180E91AA006AFE4E /* CoreMedia.framework in Frameworks */,
+				326CA127180E91AA006AFE4E /* MobileCoreServices.framework in Frameworks */,
+				326CA128180E91AA006AFE4E /* AdSupport.framework in Frameworks */,
+				326CA129180E91AA006AFE4E /* CoreGraphics.framework in Frameworks */,
+				326CA12A180E91AA006AFE4E /* AVFoundation.framework in Frameworks */,
+				326CA12B180E91AA006AFE4E /* SystemConfiguration.framework in Frameworks */,
+				326CA12C180E91AA006AFE4E /* MessageUI.framework in Frameworks */,
+				326CA12D180E91AA006AFE4E /* Security.framework in Frameworks */,
+				326CA12E180E91AA006AFE4E /* UIKit.framework in Frameworks */,
+				326CA12F180E91AA006AFE4E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80511975180AFA97007E5EA0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3277D5C0180E79B1002EF07F /* CoreMedia.framework in Frameworks */,
+				3277D5BE180E79A2002EF07F /* MobileCoreServices.framework in Frameworks */,
+				3277D5BC180E7982002EF07F /* AdSupport.framework in Frameworks */,
+				3277D5BA180E797B002EF07F /* CoreGraphics.framework in Frameworks */,
+				3277D5B8180E7973002EF07F /* AVFoundation.framework in Frameworks */,
+				3277D5B6180E796B002EF07F /* SystemConfiguration.framework in Frameworks */,
+				3277D5B4180E7962002EF07F /* MessageUI.framework in Frameworks */,
+				3277D5B2180E795A002EF07F /* Security.framework in Frameworks */,
 				805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */,
 				8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */,
 			);
@@ -53,6 +119,7 @@
 		8051196F180AFA97007E5EA0 = {
 			isa = PBXGroup;
 			children = (
+				326CA20A180E96F1006AFE4E /* CoreVideo.framework */,
 				8051197D180AFA97007E5EA0 /* ThirdPartySDKLib */,
 				8051197A180AFA97007E5EA0 /* Frameworks */,
 				80511979180AFA97007E5EA0 /* Products */,
@@ -63,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */,
+				326CA134180E91AA006AFE4E /* libThirdPartySDKLib_Tango.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +138,14 @@
 		8051197A180AFA97007E5EA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3277D5BF180E79B1002EF07F /* CoreMedia.framework */,
+				3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */,
+				3277D5BB180E7981002EF07F /* AdSupport.framework */,
+				3277D5B9180E797B002EF07F /* CoreGraphics.framework */,
+				3277D5B7180E7973002EF07F /* AVFoundation.framework */,
+				3277D5B5180E796B002EF07F /* SystemConfiguration.framework */,
+				3277D5B3180E7962002EF07F /* MessageUI.framework */,
+				3277D5B1180E7959002EF07F /* Security.framework */,
 				805119A6180B0D00007E5EA0 /* UIKit.framework */,
 				8051197B180AFA97007E5EA0 /* Foundation.framework */,
 			);
@@ -108,6 +184,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		326CA121180E91AA006AFE4E /* ThirdPartySDKLib_Tango */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 326CA131180E91AA006AFE4E /* Build configuration list for PBXNativeTarget "ThirdPartySDKLib_Tango" */;
+			buildPhases = (
+				326CA122180E91AA006AFE4E /* Sources */,
+				326CA125180E91AA006AFE4E /* Frameworks */,
+				326CA130180E91AA006AFE4E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ThirdPartySDKLib_Tango;
+			productName = ThirdPartySDKLib;
+			productReference = 326CA134180E91AA006AFE4E /* libThirdPartySDKLib_Tango.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		80511977180AFA97007E5EA0 /* ThirdPartySDKLib */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80511986180AFA97007E5EA0 /* Build configuration list for PBXNativeTarget "ThirdPartySDKLib" */;
@@ -147,11 +240,21 @@
 			projectRoot = "";
 			targets = (
 				80511977180AFA97007E5EA0 /* ThirdPartySDKLib */,
+				326CA121180E91AA006AFE4E /* ThirdPartySDKLib_Tango */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		326CA122180E91AA006AFE4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				326CA123180E91AA006AFE4E /* TangoManager.mm in Sources */,
+				326CA124180E91AA006AFE4E /* TangoSDKBridge.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80511974180AFA97007E5EA0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -164,6 +267,85 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		326CA132180E91AA006AFE4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+					"COCOS2D_DEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../GameFoundation/CocosDenshion/include\"",
+					"\"$(SRCROOT)/../GameFoundation/extensions\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+				);
+				PRODUCT_NAME = ThirdPartySDKLib_Tango;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";
+			};
+			name = Debug;
+		};
+		326CA133180E91AA006AFE4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\"",
+					"\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../GameFoundation/CocosDenshion/include\"",
+					"\"$(SRCROOT)/../GameFoundation/extensions\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
+					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+				);
+				PRODUCT_NAME = ThirdPartySDKLib_Tango;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";
+			};
+			name = Release;
+		};
 		80511984180AFA97007E5EA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -220,7 +402,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -243,6 +425,7 @@
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -256,7 +439,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -278,6 +461,7 @@
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -289,6 +473,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		326CA131180E91AA006AFE4E /* Build configuration list for PBXNativeTarget "ThirdPartySDKLib_Tango" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				326CA132180E91AA006AFE4E /* Debug */,
+				326CA133180E91AA006AFE4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		80511973180AFA97007E5EA0 /* Build configuration list for PBXProject "ThirdPartySDKLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
