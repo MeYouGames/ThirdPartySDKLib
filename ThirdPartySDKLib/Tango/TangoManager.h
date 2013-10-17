@@ -19,6 +19,15 @@
 
 - (void)initSDK;
 
-- (void) SampleSelector:(NSObject *)prms;
+- (void)sessionInitialize;
+- (void)sessionUnitialize;
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *) url
+  sourceApplication:(NSString *) requester;
+
+- (void)authenticate:(NSObject *)prms;
+//- (void)getMyProfile;
+
+- (void)SampleSelector:(NSObject *)prms;
 
 @end

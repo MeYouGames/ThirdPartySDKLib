@@ -15,6 +15,8 @@ public:
     ~TangoSDKBridge();
     
     static void initSDK();
+    
+    static void Authenticate();
 };
 
 #endif /* defined(__ThirdPartySDKLib__TangoSDKBridge__) */

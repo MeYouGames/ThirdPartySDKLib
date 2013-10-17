@@ -20,3 +20,7 @@ TangoSDKBridge::~TangoSDKBridge() {
 void TangoSDKBridge::initSDK() {
     [[TangoManager sharedInstance] initSDK];
 }
+
+void TangoSDKBridge::Authenticate() {
+    [[TangoManager sharedInstance] authenticate:nil];
+}
