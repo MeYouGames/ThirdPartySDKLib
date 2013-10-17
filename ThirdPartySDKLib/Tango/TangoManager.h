@@ -10,10 +10,13 @@
 #import <UIKit/UIKit.h>
 #import "SynthesizeSingleton.h"
 #include "IOSNDKHelper.h"
+#import <TangoSDK/TangoSDK.h>
 
 @interface TangoManager : NSObject{
     
 }
+
+@property (nonatomic, strong) TangoProfileEntry *profile;
 
 + (TangoManager *) sharedInstance;
 
@@ -26,8 +29,10 @@
   sourceApplication:(NSString *) requester;
 
 - (void)authenticate:(NSObject *)prms;
-//- (void)getMyProfile;
+- (void)getMyProfile:(NSObject *)prms;
 
 - (void)SampleSelector:(NSObject *)prms;
+
+//+ (NSString*)base64forData:(NSData*)theData;
 
 @end

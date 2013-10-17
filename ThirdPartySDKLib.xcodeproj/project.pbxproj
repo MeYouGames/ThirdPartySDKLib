@@ -28,6 +28,8 @@
 		3277D5BC180E7982002EF07F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BB180E7981002EF07F /* AdSupport.framework */; };
 		3277D5BE180E79A2002EF07F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3277D5C0180E79B1002EF07F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277D5BF180E79B1002EF07F /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		329FEE8D181006A80057DEC0 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */; };
+		329FEE8E181006A80057DEC0 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */; };
 		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198C180AFADA007E5EA0 /* TangoManager.mm */; };
 		80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */; };
@@ -66,6 +68,8 @@
 		3277D5BB180E7981002EF07F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		3277D5BD180E79A2002EF07F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3277D5BF180E79B1002EF07F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		329FEE8B181006A80057DEC0 /* NSData+MBBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MBBase64.h"; sourceTree = "<group>"; };
+		329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = "NSData+MBBase64.m"; sourceTree = "<group>"; };
 		80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8051197B180AFA97007E5EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThirdPartySDKLib-Prefix.pch"; sourceTree = "<group>"; };
@@ -172,6 +176,8 @@
 		80511989180AFADA007E5EA0 /* Tango */ = {
 			isa = PBXGroup;
 			children = (
+				329FEE8B181006A80057DEC0 /* NSData+MBBase64.h */,
+				329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */,
 				8051198D180AFADA007E5EA0 /* TangoSDKBridge.h */,
 				8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */,
 				8051198B180AFADA007E5EA0 /* TangoManager.h */,
@@ -252,6 +258,7 @@
 			files = (
 				326CA123180E91AA006AFE4E /* TangoManager.mm in Sources */,
 				326CA124180E91AA006AFE4E /* TangoSDKBridge.mm in Sources */,
+				329FEE8E181006A80057DEC0 /* NSData+MBBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +268,7 @@
 			files = (
 				8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */,
 				80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */,
+				329FEE8D181006A80057DEC0 /* NSData+MBBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,9 +306,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThirdPartySDKLib_Tango;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";
@@ -337,9 +343,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThirdPartySDKLib_Tango;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/NDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/IOSNDKHelper\" \"$(SRCROOT)/../PlatformService/PlatformService/EasyNDK/jansson\" \"$(SRCROOT)/../GameFoundation/cocos2dx\" \"$(SRCROOT)/../GameFoundation/cocos2dx/kazmath/include\" \"$(SRCROOT)/../GameFoundation/CocosDenshion/include\" \"$(SRCROOT)/../GameFoundation/extensions\" \"$(SRCROOT)/../GameFoundation/cocos2dx/include\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"";

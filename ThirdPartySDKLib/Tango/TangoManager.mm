@@ -8,6 +8,7 @@
 
 #import "TangoManager.h"
 #import <TangoSDK/TangoSDK.h>
+#import "NSData+MBBase64.h"
 
 @implementation TangoManager
 
@@ -24,12 +25,6 @@ static TangoManager *_tangoManager = nil;
     NSLog(@"init tango sdk");
     [IOSNDKHelper SetNDKReciever:self];
       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsChanged:) name:TangoSessionEventPostedTangoSessionNotification object:nil];
-}
-
-- (void)contactsChanged:(NSNotification *) notification{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"contactsChanged");
-    });
 }
 
 - (void)sessionInitialize {
@@ -87,7 +82,136 @@ static TangoManager *_tangoManager = nil;
         NSLog(@"TangoSession.sharedSession.isAuthenticated = true");
     }
 }
-//- (void)getMyProfile {
+
+- (void)getMyProfile:(NSObject *)prms {
+    
+    NSLog(@"purchase something called");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString* CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    
+        void (^processResult)(TangoProfileResult *, NSError *) =
+        ^(TangoProfileResult *result, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(error.code == 0) {
+                    TangoProfileEntry *profile = [result objectAtIndex:0];
+                    
+                    if (profile != nil) {
+                        self.profile = profile;
+                        NSLog(@"My profile is getted.");
+                        
+                        // jason
+                        NSString * str_gender;
+                        switch (profile.gender) {
+                            case TangoSdkGenderMale:
+                                str_gender = @"Male";
+                                break;
+                            case TangoSdkGenderFemale:
+                                str_gender = @"Female";
+                                break;
+                            default:
+                                case TangoSdkGenderUnknown:
+                                str_gender = @"Unknown";
+                                break;
+                        }
+                        NSString * str_place_holder;
+                        if (profile.profilePictureIsPlaceholder) {
+                            str_place_holder = @"yes";
+                        } else {
+                            str_place_holder = @"no";
+                        }
+                        
+                        NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
+                                                profile.firstName,
+                                                profile.lastName,
+                                                profile.fullName,
+                                                profile.profileID,
+                                                str_gender,
+                                                profile.profilePictureURL,
+                                                profile.status,
+                                                str_place_holder
+                                                ];
+                        
+                        if (!profile.profilePictureIsPlaceholder) {
+                            UIImage * picture = profile.cachedProfilePicture;
+                            if (picture == nil) {
+                                [profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                                    // Display the downloaded image.
+                                    NSData * data_pic = UIImagePNGRepresentation(image);
+                                    NSString * str_pic = [data_pic base64Encoding];
+                                    NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"my_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                       profile.profileID,
+                                                                       str_pic];
+                                    NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                    NSError * err_pic = nil;
+                                    NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                          options:nil
+                                                                                            error:&err_pic];
+                                    
+                                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                                }];
+                            } else {
+                                // Display the cached image.
+                                NSData * data_pic = UIImagePNGRepresentation(picture);
+                                NSString * str_pic = [data_pic base64Encoding];
+                                NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"my_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                   profile.profileID,
+                                                                   str_pic];
+                                NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                NSError * err_pic = nil;
+                                NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                          options:nil
+                                                                                            error:&err_pic];
+                                
+                                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                            }
+                        }
+                        
+                        NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError * err = nil;
+                        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                              options:nil
+                                                                                error:&err];
+                        if (err != nil) { // 有错误
+                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                       WithParameters:nil]; 
+                        } else {
+                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                       WithParameters:dict];
+                        }
+            
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:@"Could not fetch profile."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:error.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"Ok"
+                                                          otherButtonTitles:nil];
+                    
+                    [alert show];
+                }
+            });
+        };
+        
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error = nil;
+        TangoProfileResult *result = [TangoProfile fetchMyProfile:&error];
+        processResult(result, error);
+    });
+}
+
+//- (void)getMyProfile_profileID:(NSString *)profileID
+//                       uiImage:(UIImage *)image
+//{
 //    
 //}
 
@@ -114,5 +238,37 @@ static TangoManager *_tangoManager = nil;
     // with the string we are passing
     [IOSNDKHelper SendMessage:CPPFunctionToBeCalled WithParameters:nil];
 }
+
+//+ (NSString*)base64forData:(NSData*)theData
+//{
+//    const uint8_t* input = (const uint8_t*)[theData bytes];
+//    NSInteger length = [theData length];
+//    
+//    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+//    
+//    NSMutableData* data = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
+//    uint8_t* output = (uint8_t*)data.mutableBytes;
+//    
+//    NSInteger i;
+//    for (i=0; i < length; i += 3) {
+//        NSInteger value = 0;
+//        NSInteger j;
+//        for (j = i; j < (i + 3); j++) {
+//            value <<= 8;
+//            
+//            if (j < length) {
+//                value |= (0xFF & input[j]);
+//            }
+//        }
+//        
+//        NSInteger theIndex = (i / 3) * 4;
+//        output[theIndex + 0] =                    table[(value >> 18) & 0x3F];
+//        output[theIndex + 1] =                    table[(value >> 12) & 0x3F];
+//        output[theIndex + 2] = (i + 1) < length ? table[(value >> 6)  & 0x3F] : '=';
+//        output[theIndex + 3] = (i + 2) < length ? table[(value >> 0)  & 0x3F] : '=';
+//    }
+//    
+//    return [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
+//}
 
 @end
