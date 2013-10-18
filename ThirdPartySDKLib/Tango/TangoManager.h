@@ -29,7 +29,11 @@
   sourceApplication:(NSString *) requester;
 
 - (void)authenticate:(NSObject *)prms;
-- (void)getMyProfile:(NSObject *)prms;
+- (void)getMyProfile:(NSObject *)prms; // 获取自己信息
+- (void)getFriendProfile:(NSObject *)prms // 获取朋友信息 (并不直接调用)
+               useCached:(BOOL)cached; 
+- (void)getFriendProfile_cached:(NSObject *)prms;
+- (void)getFriendProfile_current:(NSObject *)prms;
 
 - (void)SampleSelector:(NSObject *)prms;
 

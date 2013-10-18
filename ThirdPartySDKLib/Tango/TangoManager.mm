@@ -95,7 +95,7 @@ static TangoManager *_tangoManager = nil;
         ^(TangoProfileResult *result, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(error.code == 0) {
-                    TangoProfileEntry *profile = [result objectAtIndex:0];
+                    TangoProfileEntry * profile = [result objectAtIndex:0];
                     
                     if (profile != nil) {
                         self.profile = profile;
@@ -121,7 +121,19 @@ static TangoManager *_tangoManager = nil;
                         } else {
                             str_place_holder = @"no";
                         }
-                        
+                        /* jason:
+                         {"my_profile":
+                            {"first_name":"王",
+                             "last_name":"一纯",
+                             "full_name":"王 一纯",
+                             "profile_id":"t2MNHKigKwH4GExRtSqMag",
+                             "gender":"Male",
+                             "picture_url":"http://cget.tango.me/contentserver/download/tAGzXTwDbvzwUMXcHOAR8WCLPlOmBNaydcQ1cf98U-KxndNrQsh-xc55Z9Vcl7yz/hOxpit4u/thumbnail"
+                             "status":"正在准备接Tango的SDK"
+                             "place_holder":"no"
+                            }
+                         }
+                         */
                         NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
                                                 profile.firstName,
                                                 profile.lastName,
@@ -132,6 +144,19 @@ static TangoManager *_tangoManager = nil;
                                                 profile.status,
                                                 str_place_holder
                                                 ];
+                        
+                        NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError * err = nil;
+                        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                              options:nil
+                                                                                error:&err];
+                        if (err != nil) { // 有错误
+                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                       WithParameters:nil];
+                        } else {
+                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                       WithParameters:dict];
+                        }
                         
                         if (!profile.profilePictureIsPlaceholder) {
                             UIImage * picture = profile.cachedProfilePicture;
@@ -168,18 +193,6 @@ static TangoManager *_tangoManager = nil;
                             }
                         }
                         
-                        NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
-                        NSError * err = nil;
-                        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
-                                                                              options:nil
-                                                                                error:&err];
-                        if (err != nil) { // 有错误
-                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
-                                       WithParameters:nil]; 
-                        } else {
-                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
-                                       WithParameters:dict];
-                        }
             
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -207,6 +220,179 @@ static TangoManager *_tangoManager = nil;
         TangoProfileResult *result = [TangoProfile fetchMyProfile:&error];
         processResult(result, error);
     });
+}
+
+- (void)getFriendProfile:(NSObject *)prms
+               useCached:(BOOL)cached {
+    NSLog(@"getFriendProfile");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString* CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    
+    void (^processResult)(TangoProfileResult *, NSError *) =
+    ^(TangoProfileResult *result, NSError*error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error.code == 0) {
+                /* jason:
+                 {"firend_profile":[
+                    {*},{*}
+                   ]
+                 }
+                 */
+                NSString * jason_str = @"{\"firend_profile\":[";
+                for (TangoProfileEntry * profile in result.profileEnumerator) {
+//                for (int index = 0; index < result.count; index++) {
+//                    TangoProfileEntry * profile = [result objectAtIndex:index];
+//                    bool isLast = index = result.count - 1 ? true : false;
+                
+                    if (profile != nil) {
+                        self.profile = profile;
+                        NSLog(@"Friend (%@) profile is getted.", profile.fullName);
+                        
+                        // jason
+                        NSString * str_gender;
+                        switch (profile.gender) {
+                            case TangoSdkGenderMale:
+                                str_gender = @"Male";
+                                break;
+                            case TangoSdkGenderFemale:
+                                str_gender = @"Female";
+                                break;
+                            default:
+                            case TangoSdkGenderUnknown:
+                                str_gender = @"Unknown";
+                                break;
+                        }
+                        NSString * str_place_holder;
+                        if (profile.profilePictureIsPlaceholder) {
+                            str_place_holder = @"yes";
+                        } else {
+                            str_place_holder = @"no";
+                        }
+                        /* jason:
+                         
+                         {"first_name":"王",
+                         "last_name":"一纯",
+                         "full_name":"王 一纯",
+                         "profile_id":"t2MNHKigKwH4GExRtSqMag",
+                         "gender":"Male",
+                         "picture_url":"http://cget.tango.me/contentserver/download/tAGzXTwDbvzwUMXcHOAR8WCLPlOmBNaydcQ1cf98U-KxndNrQsh-xc55Z9Vcl7yz/hOxpit4u/thumbnail"
+                         "status":"正在准备接Tango的SDK"
+                         "place_holder":"no"
+                         }
+                         
+                         */
+                        NSString * jason_str_inner = [NSString stringWithFormat:@"{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}",
+                                                profile.firstName,
+                                                profile.lastName,
+                                                profile.fullName,
+                                                profile.profileID,
+                                                str_gender,
+                                                profile.profilePictureURL,
+                                                profile.status,
+                                                str_place_holder
+                                                ];
+                        jason_str = [jason_str stringByAppendingString:jason_str_inner];
+//                        if (isLast) { // 最后一个
+//                            jason_str = [jason_str stringByAppendingString:@"]}"];
+//                        } else {
+                            jason_str = [jason_str stringByAppendingString:@","];
+//                        }
+                        
+                        if (!profile.profilePictureIsPlaceholder) {
+                            UIImage * picture = profile.cachedProfilePicture;
+                            if (picture == nil) {
+                                [profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                                    // Display the downloaded image.
+                                    NSData * data_pic = UIImagePNGRepresentation(image);
+                                    NSString * str_pic = [data_pic base64Encoding];
+                                    NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                       profile.profileID,
+                                                                       str_pic];
+                                    NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                    NSError * err_pic = nil;
+                                    NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                              options:nil
+                                                                                                error:&err_pic];
+                                    
+                                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                                }];
+                            } else {
+                                // Display the cached image.
+                                NSData * data_pic = UIImagePNGRepresentation(picture);
+                                NSString * str_pic = [data_pic base64Encoding];
+                                NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                   profile.profileID,
+                                                                   str_pic];
+                                NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                NSError * err_pic = nil;
+                                NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                          options:nil
+                                                                                            error:&err_pic];
+                                
+                                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                            }
+                        }                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:@"Could not fetch profile."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                }
+                
+                jason_str = [jason_str substringToIndex:[jason_str length]-1];
+                jason_str = [jason_str stringByAppendingString:@"]}"];
+                
+                NSLog(@"jason: %@", jason_str);
+                
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
+                if (err != nil) { // 有错误
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:nil];
+                } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:dict];
+                }
+
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:error.localizedDescription
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                
+                [alert show];
+            }
+        });
+    };
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error = nil;
+        TangoProfileResult * result;
+        if (cached) {
+            result = [TangoProfile fetchMyCachedFriends:&error];
+        } else {
+            result = [TangoProfile fetchMyFriendsProfiles:&error];
+        }
+        processResult(result, error);
+    });
+}
+
+- (void)getFriendProfile_cached:(NSObject *)prms {
+    [self getFriendProfile:prms useCached:YES];
+}
+
+- (void)getFriendProfile_current:(NSObject *)prms {
+    [self getFriendProfile:prms useCached:NO];
 }
 
 - (void)SampleSelector:(NSObject *)prms
