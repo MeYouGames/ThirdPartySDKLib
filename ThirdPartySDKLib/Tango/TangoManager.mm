@@ -51,6 +51,11 @@ static TangoManager *_tangoManager = nil;
 }
 
 - (void)authenticate:(NSObject *)prms {
+    
+    NSLog(@"authenticate");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     if (!TangoSession.sharedSession.isAuthenticated){
         NSLog(@"TangoSession.sharedSession.isAuthenticated = false");
         [TangoSession.sharedSession authenticateWithHandler:^(TangoSession *session, NSError *error) {
@@ -58,6 +63,8 @@ static TangoManager *_tangoManager = nil;
                 switch (error.code) {
                     case TANGO_SDK_SUCCESS:
                         NSLog(@"TANGO_SDK_SUCCESS");
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                   WithParameters:nil];
                         break;
                         
                     case TANGO_SDK_TANGO_APP_NOT_INSTALLED:
@@ -80,6 +87,8 @@ static TangoManager *_tangoManager = nil;
         }];
     } else {
         NSLog(@"TangoSession.sharedSession.isAuthenticated = true");
+        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                   WithParameters:nil];
     }
 }
 
@@ -393,6 +402,203 @@ static TangoManager *_tangoManager = nil;
 
 - (void)getFriendProfile_current:(NSObject *)prms {
     [self getFriendProfile:prms useCached:NO];
+}
+
+- (void)loadPossessions:(NSObject *)prms {
+    NSLog(@"loadPossessions");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString* CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    
+    /* jason
+     {"possessions":[
+        {"last_modified":1366998173,
+        "item_id":"gold",
+        "value":"20000",
+        "version":"1"},
+        {"last_modified":1366998176,
+        "item_id":"heart",
+        "value":"5",
+        "version":"1"}
+       ]
+     }
+     */
+    
+    [TangoPossessions fetchWithHandler:^(NSArray *possessions, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error.code == 0) {
+                NSString * jason_str = @"{\"possessions\":[";
+                self.possessions = possessions;
+                
+                for (TangoPossession * possession in possessions) {
+                    if (possession != nil) {
+                        NSString * jason_str_inner = [NSString stringWithFormat:@"{\"last_modified\":\"%@\",\"item_id\":\"%@\",\"value\":\"%d\",\"version\":\"%d\"}",
+                                                      possession.lastModified,
+                                                      possession.name,
+                                                      possession.value,
+                                                      possession.version];
+                        jason_str = [jason_str stringByAppendingString:jason_str_inner];
+                        jason_str = [jason_str stringByAppendingString:@","];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:@"Could not fetch possession."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                }
+                
+                if (possessions.count != 0) {
+                    jason_str = [jason_str substringToIndex:[jason_str length]-1];
+                }
+                
+                jason_str = [jason_str stringByAppendingString:@"]}"];
+                
+                NSLog(@"jason: %@", jason_str);
+                
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
+                
+                if (err != nil) { // 有错误
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:nil];
+                } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:dict];
+                }
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get Possessions Error"
+                                                                message:error.localizedDescription
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            
+        });
+    }];
+}
+
+- (void)savePossessions:(NSObject *)prms {
+    NSLog(@"savePossessions");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * possession_name = (NSString*)[parameters objectForKey:@"possession_name"]; // 存储财产名
+    NSString * possession_value = (NSString*)[parameters objectForKey:@"possession_value"]; // 存储财产值
+    
+    if (self.possessions == nil) {
+        NSLog(@"please fetch possessions before.");
+        return;
+    }
+
+    TangoPossession * possession = nil; // 放置原来已经有的possession
+    BOOL isHave = NO;
+    for (int i = 0; i < self.possessions.count; i++) {
+        TangoPossession * inner_possession = self.possessions[i];
+        if ([possession_name compare:possession_name] == NSOrderedSame) {
+            possession = inner_possession; // 找到了
+            isHave = YES;
+            break;
+        }
+    }
+    
+    if (possession == nil) {
+        possession = [[TangoPossession alloc] init];
+    }
+    
+    if (possession.exists == NO) {
+        possession.name = possession_name; // 写入名称
+    }
+    
+    possession.value = [possession_value integerValue]; // 写入值
+    
+    [TangoPossessions save:@[possession] withHandler:^(TangoPossessionResult *result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(result.successful) {
+                // TODO: SUCCESSFUL
+                
+                NSString * jason_str = @"{\"possessions\":[";
+                
+                for (NSString * possessionName in result.possessions) {
+                    TangoPossession * possession = result.possessions[possessionName];
+                    if (possession != nil) {
+                        NSString * jason_str_inner = [NSString stringWithFormat:@"{\"last_modified\":\"%@\",\"item_id\":\"%@\",\"value\":\"%d\",\"version\":\"%d\"}",
+                                                      possession.lastModified,
+                                                      possession.name,
+                                                      possession.value,
+                                                      possession.version];
+                        jason_str = [jason_str stringByAppendingString:jason_str_inner];
+                        jason_str = [jason_str stringByAppendingString:@","];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:@"Could not fetch possession."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                }
+                
+                if (result.possessions.count != 0) {
+                    jason_str = [jason_str substringToIndex:[jason_str length]-1];
+                }
+                
+                jason_str = [jason_str stringByAppendingString:@"]}"];
+                
+                NSLog(@"jason: %@", jason_str);
+                
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
+                
+                if (err != nil) { // 有错误
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:nil];
+                } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:dict];
+                }
+                
+            } else {
+                NSString *message;
+                
+                // The possession we attempted to save was stale. This means that a newer version of the
+                // possession exists on the server.
+                if(result.isStale) {
+                    // If the user was attempting to create a new possession, then that means the possession's
+                    // name was already taken.
+                    if(possession.exists == NO) {
+                        message = [NSString stringWithFormat:@"Possession \"%@\" already exists.",
+                                   possession.name];
+                    } else {
+                        message = @"Stale possession! Update your possessions and try again.";
+                    }
+                } else {
+                    message = result.error.localizedDescription;
+                }
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set Possessions Error"
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                
+                [alert show];
+            }
+        });
+    }];
 }
 
 - (void)SampleSelector:(NSObject *)prms

@@ -16,7 +16,8 @@
     
 }
 
-@property (nonatomic, strong) TangoProfileEntry *profile;
+@property (nonatomic, strong) TangoProfileEntry * profile;
+@property (nonatomic, strong) NSArray * possessions;
 
 + (TangoManager *) sharedInstance;
 
@@ -34,6 +35,9 @@
                useCached:(BOOL)cached; 
 - (void)getFriendProfile_cached:(NSObject *)prms;
 - (void)getFriendProfile_current:(NSObject *)prms;
+
+- (void)loadPossessions:(NSObject *)prms; // 获得当前玩家财产
+- (void)savePossessions:(NSObject *)prms; // 设置当前玩家财产
 
 - (void)SampleSelector:(NSObject *)prms;
 
