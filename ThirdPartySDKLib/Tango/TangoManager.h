@@ -39,6 +39,11 @@
 - (void)loadPossessions:(NSObject *)prms; // 获得当前玩家财产
 - (void)savePossessions:(NSObject *)prms; // 设置当前玩家财产
 
+//- (void)loadMetrics:(NSObject *)prms; // 提取参数
+//- (void)saveMetrics:(NSObject *)prms; // 保存参数
+- (void)saveScore:(NSObject *)prms; // 保存成绩
+- (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
+
 - (void)SampleSelector:(NSObject *)prms;
 
 //+ (NSString*)base64forData:(NSData*)theData;

@@ -9,6 +9,10 @@
 #ifndef __ThirdPartySDKLib__TangoSDKBridge__
 #define __ThirdPartySDKLib__TangoSDKBridge__
 
+
+#include "cocos2d.h"
+using namespace cocos2d;
+
 class TangoSDKBridge {
 public:
     TangoSDKBridge();
@@ -17,6 +21,10 @@ public:
     static void initSDK();
     
     static void Authenticate();
+    
+    static bool uImage2cTexture(void* uiImage, CCTexture2D* tex);
+    
+    static CCTexture2D * CCString2CCTexture2D(CCString * str);
 };
 
 #endif /* defined(__ThirdPartySDKLib__TangoSDKBridge__) */

@@ -601,6 +601,184 @@ static TangoManager *_tangoManager = nil;
     }];
 }
 
+//- (void)loadMetrics:(NSObject *)prms {
+//    NSLog(@"loadMetrics");
+//    NSDictionary *parameters = (NSDictionary*)prms;
+//    NSLog(@"Passed params are : %@", parameters);
+//    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+//    NSString * metrics_profile_id = (NSString*)[parameters objectForKey:@"metrics_profile_id"]; // 账户id
+//    NSString * metrics_name = (NSString*)[parameters objectForKey:@"metrics_name"]; // 存储财产名
+//    NSString * metrics_value = (NSString*)[parameters objectForKey:@"metrics_value"]; // 存储财产值
+//
+//    TangoMetricsGetRequest * request = [[TangoMetricsGetRequest alloc] init];
+//    
+//    [request setMetric:metrics_name withFunction:metrics_name];
+//}
+
+//- (void)saveMetrics:(NSObject *)prms {
+//    NSLog(@"saveMetrics");
+//}
+
+- (void)saveScore:(NSObject *)prms; {
+    NSLog(@"saveScore");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * score_value = (NSString*)[parameters objectForKey:@"score_value"]; // 存储分数
+    
+    TangoMetricsSetRequest *request = [[TangoMetricsSetRequest alloc ] init];
+    [request setMetric :@"score"
+              withValue:[score_value integerValue]
+           withFunction:@"MAX"];
+    
+    [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error.code == 0) {
+                for (TangoMetric *metric in metrics) {
+                    NSLog( @"Saved Metric Name: %@" , metric.name);
+                    NSLog( @"Saved Metric Value: %d" , metric.value);
+                    NSLog( @"Saved Metric Function Type: %@" , metric.function);
+                    NSLog( @"Saved Metric Last Modified Date: %@" , metric.lastModified);
+                }
+                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                           WithParameters:nil];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
+                                                                message:error.localizedDescription
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                
+                [alert show];
+            }
+        });
+    }];   
+                       
+}
+
+- (void)fetchLeaderBoard:(NSObject *)prms {
+    NSLog(@"fetchLeaderBoard");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    
+    TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
+    [request setMetric:@"score" withFunction:@"MAX" ascending:NO];
+    
+    /* jason:
+     {"leaderboard":[
+     {*},{*}
+     ]
+     }
+     */
+    
+    [TangoLeaderboard fetch:request withHandler:^(NSArray *entries, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error.code == 0) {
+                
+                /* jason:
+                 
+                 {
+                 "profile_id":"t2MNHKigKwH4GExRtSqMag",
+                 "full_name":"王 一纯",
+                 "metrics":{
+                    "*":"*",
+                    "*":"*"
+                 }
+                 }
+                 */
+                
+                NSString * jason_str = @"{\"leaderboard\":[";
+                
+                for(TangoLeaderboardEntry * entry in entries) {
+                    
+                    if (!entry.profile.profilePictureIsPlaceholder) {
+                        UIImage * picture = entry.profile.cachedProfilePicture;
+                        if (picture == nil) {
+                            [entry.profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                                // Display the downloaded image.
+                                NSData * data_pic = UIImagePNGRepresentation(image);
+                                NSString * str_pic = [data_pic base64Encoding];
+                                NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"leader_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                   entry.profile.profileID,
+                                                                   str_pic];
+                                NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                NSError * err_pic = nil;
+                                NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                          options:nil
+                                                                                            error:&err_pic];
+                                
+                                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                            }];
+                        } else {
+                            // Display the cached image.
+                            NSData * data_pic = UIImagePNGRepresentation(picture);
+                            NSString * str_pic = [data_pic base64Encoding];
+                            NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"leader_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                               entry.profile.profileID,
+                                                               str_pic];
+                            NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                            NSError * err_pic = nil;
+                            NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                      options:nil
+                                                                                        error:&err_pic];
+                            
+                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                        }
+                    }
+                    
+                    NSString * jason_str_inner = [NSString stringWithFormat:@"{\"profile_id\":\"%@\",\"full_name\":\"%@\",\"metrics\":{",
+                                                  entry.profile.profileID,
+                                                  entry.profile.fullName
+                                                  ];
+                    
+                    NSLog(@"User name: %@", entry.profile.fullName);
+                    
+                    for (TangoMetric * metric in entry.metrics) {
+                        NSString * jason_str_metrics = [NSString stringWithFormat:@"\"%@\":\"%d\",", metric.name, metric.value];
+                        jason_str_inner = [jason_str_inner stringByAppendingString:jason_str_metrics];
+                        
+                        NSLog( @"Metric name: %@" , metric.name);
+                        NSLog( @"Metric value: %d" , metric.value);
+                    }
+                    
+                    jason_str_inner = [jason_str_inner substringToIndex:[jason_str_inner length]-1];
+                    jason_str_inner = [jason_str_inner stringByAppendingString:@"}},"];
+                    
+                    jason_str = [jason_str stringByAppendingString:jason_str_inner];
+                }
+                
+                jason_str = [jason_str substringToIndex:[jason_str length]-1];
+                jason_str = [jason_str stringByAppendingString:@"]}"];
+                
+                
+                NSLog(@"jason: %@", jason_str);
+                
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
+                if (err != nil) { // 有错误
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:nil];
+                } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:dict];
+                }
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fetch Leader Board Error"
+                                                                message:error.localizedDescription
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        });
+    }];
+}
+
 - (void)SampleSelector:(NSObject *)prms
 {
     NSLog(@"purchase something called");
