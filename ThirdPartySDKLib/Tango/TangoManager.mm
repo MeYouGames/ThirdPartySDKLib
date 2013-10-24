@@ -11,6 +11,8 @@
 #import "NSData+MBBase64.h"
 
 
+static NSString * const kLeaderboardFunction = @"MAX_THIS_WEEK";
+
 static const MessageHandler resultHandler = ^(NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *message = nil;
@@ -651,10 +653,23 @@ static TangoManager *_tangoManager = nil;
     NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     NSString * score_value = (NSString*)[parameters objectForKey:@"score_value"]; // 存储分数
     
+    NSMutableSet * functions = [NSMutableSet set];
+    [functions addObject:@"MAX"];
+    [functions addObject:@"MAX_THIS_WEEK"];
+    [functions addObject:@"MAX_LAST_WEEK"];
+    [functions addObject:@"MAX_THIS_DAY"];
+    [functions addObject:@"MAX_LAST_DAY"];
+    [functions addObject:@"MAX_THIS_HOUR"];
+    [functions addObject:@"MAX_LAST_HOUR"];
+    [functions addObject:@"MIN"];
+    [functions addObject:@"SUM"];
+    [functions addObject:@"COUNT"];
+    [functions addObject:@"AVE"];
+    
     TangoMetricsSetRequest *request = [[TangoMetricsSetRequest alloc ] init];
     [request setMetric:@"score"
              withValue:[score_value integerValue]
-          withFunction:@"MAX"];
+          withFunctions:functions.allObjects];
     
     [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -689,7 +704,7 @@ static TangoManager *_tangoManager = nil;
     NSString * CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
     
     TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
-    [request setMetric:@"score" withFunction:@"MAX" ascending:YES];
+    [request setMetric:@"score" withFunction:kLeaderboardFunction ascending:YES];
     
     /* jason:
      {"leaderboard":[
