@@ -44,7 +44,8 @@
 - (void)saveScore:(NSObject *)prms; // 保存成绩
 - (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
 
-- (void)sendInventationMessageWithUrl:(NSString *)profileID;
+- (void)sendInventationMessageWithUrl:(NSObject *)prms;
+- (void)sendHeartMessage:(NSString *)profileID;
 
 - (void)SampleSelector:(NSObject *)prms;
 

@@ -652,9 +652,9 @@ static TangoManager *_tangoManager = nil;
     NSString * score_value = (NSString*)[parameters objectForKey:@"score_value"]; // 存储分数
     
     TangoMetricsSetRequest *request = [[TangoMetricsSetRequest alloc ] init];
-    [request setMetric :@"score"
-              withValue:[score_value integerValue]
-           withFunction:@"MAX"];
+    [request setMetric:@"score"
+             withValue:[score_value integerValue]
+          withFunction:@"MAX"];
     
     [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -689,7 +689,7 @@ static TangoManager *_tangoManager = nil;
     NSString * CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
     
     TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
-    [request setMetric:@"score" withFunction:@"MAX" ascending:NO];
+    [request setMetric:@"score" withFunction:@"MAX" ascending:YES];
     
     /* jason:
      {"leaderboard":[
@@ -812,7 +812,7 @@ static TangoManager *_tangoManager = nil;
 //    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     NSString * profile_id = (NSString*)[parameters objectForKey:@"profile_id"]; // id
     
-    NSURL * actionURL = [NSURL URLWithString:@"whiterock://invitation"];
+    NSURL * actionURL = [NSURL URLWithString:@"bigbangrabbit4t://invitation"];
     
     TangoActionMap *actions = [[TangoActionMap alloc] init];
     [actions setActionForPlatform:TangoSdkPlatformFallback
@@ -835,7 +835,48 @@ static TangoManager *_tangoManager = nil;
     TangoMessage *message = [[TangoMessage alloc] init];
     
     message.messageText = @"This is awesome!";
-    message.descriptionText = @"Join me in WhiteRock!";
+    message.descriptionText = @"Join me in BigBangRabbit! (@meyougames)";
+    message.actionMap = actions;
+    message.resultHandler = resultHandler;
+    
+    [TangoMessaging sendMessage:message toRecipients:@[profile_id]];
+}
+
+- (void)sendHeartMessage:(NSObject *)prms {
+    NSLog(@"sendHeartMessage");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    //    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * profile_id = (NSString*)[parameters objectForKey:@"profile_id"]; // id
+    NSString * gift_id = (NSString*)[parameters objectForKey:@"gift_id"];
+    NSString * my_profile_id = (NSString*)[parameters objectForKey:@"my_profile_id"]; // my profile id
+    
+    NSString * urlStr = [NSString stringWithFormat:@"bigbangrabbit4t://gifting?gift_id=%d&gift_value=heart_x1&sender_id=%@", [gift_id intValue], my_profile_id];
+    
+    NSURL * actionURL = [NSURL URLWithString:urlStr];
+    
+    TangoActionMap *actions = [[TangoActionMap alloc] init];
+    [actions setActionForPlatform:TangoSdkPlatformFallback
+                          withURL:[NSURL URLWithString:@"http://www.tango.me"]
+                     actionPrompt:@"Check it out!"
+                         mimeType:@"text/url"];
+    
+    // LAUNCH_CONTEXT is a placeholder. It will be used by Tango to pass launch context
+    // (e.g. conversation id and participants)
+    // Note that uri string must be RFC3986 compliant.
+    [actions setActionForPlatform:TangoSdkPlatformIOS
+                          withURL:actionURL
+                     actionPrompt:@"Tap to play!"
+                         mimeType:@"text/url"];
+    
+    [actions setActionForPlatform:TangoSdkPlatformAndroid
+                          withURL:actionURL
+                     actionPrompt:@"Tap to Play"
+                         mimeType:@"text/url"];
+    TangoMessage *message = [[TangoMessage alloc] init];
+    
+    message.messageText = @"This is awesome!";
+    message.descriptionText = @"Join me in BigBangRabbit! (@meyougames)";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
