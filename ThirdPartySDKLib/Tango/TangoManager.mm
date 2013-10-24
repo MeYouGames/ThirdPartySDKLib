@@ -718,12 +718,28 @@ static TangoManager *_tangoManager = nil;
                 
                 for(TangoLeaderboardEntry * entry in entries) {
                     
-                    if (!entry.profile.profilePictureIsPlaceholder) {
-                        UIImage * picture = entry.profile.cachedProfilePicture;
-                        if (picture == nil) {
-                            [entry.profile fetchProfilePictureWithHandler:^(UIImage *image) {
-                                // Display the downloaded image.
-                                NSData * data_pic = UIImagePNGRepresentation(image);
+                    if ([CPPFunctionToBeCalled_pic compare:@"NO"] != NSOrderedSame) {
+                        if (!entry.profile.profilePictureIsPlaceholder) {
+                            UIImage * picture = entry.profile.cachedProfilePicture;
+                            if (picture == nil) {
+                                [entry.profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                                    // Display the downloaded image.
+                                    NSData * data_pic = UIImagePNGRepresentation(image);
+                                    NSString * str_pic = [data_pic base64Encoding];
+                                    NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"leader_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                       entry.profile.profileID,
+                                                                       str_pic];
+                                    NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                    NSError * err_pic = nil;
+                                    NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                              options:nil
+                                                                                                error:&err_pic];
+                                    
+                                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                                }];
+                            } else {
+                                // Display the cached image.
+                                NSData * data_pic = UIImagePNGRepresentation(picture);
                                 NSString * str_pic = [data_pic base64Encoding];
                                 NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"leader_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
                                                                    entry.profile.profileID,
@@ -735,24 +751,9 @@ static TangoManager *_tangoManager = nil;
                                                                                             error:&err_pic];
                                 
                                 [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
-                            }];
-                        } else {
-                            // Display the cached image.
-                            NSData * data_pic = UIImagePNGRepresentation(picture);
-                            NSString * str_pic = [data_pic base64Encoding];
-                            NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"leader_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
-                                                               entry.profile.profileID,
-                                                               str_pic];
-                            NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
-                            NSError * err_pic = nil;
-                            NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
-                                                                                      options:nil
-                                                                                        error:&err_pic];
-                            
-                            [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                            }
                         }
                     }
-                    
                     NSString * jason_str_inner = [NSString stringWithFormat:@"{\"profile_id\":\"%@\",\"full_name\":\"%@\",\"metrics\":{",
                                                   entry.profile.profileID,
                                                   entry.profile.fullName
