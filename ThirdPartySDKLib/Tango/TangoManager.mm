@@ -25,12 +25,12 @@ static const MessageHandler resultHandler = ^(NSError *error) {
         }
         
         NSLog(@"%@", message);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Status"
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Status"
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"Ok"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     });
 };
 
