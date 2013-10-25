@@ -81,6 +81,7 @@ static TangoManager *_tangoManager = nil;
     NSDictionary *parameters = (NSDictionary*)prms;
     NSLog(@"Passed params are : %@", parameters);
     NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
     if (!TangoSession.sharedSession.isAuthenticated){
         NSLog(@"TangoSession.sharedSession.isAuthenticated = false");
         [TangoSession.sharedSession authenticateWithHandler:^(TangoSession *session, NSError *error) {
@@ -100,12 +101,12 @@ static TangoManager *_tangoManager = nil;
                         break;
                         
                     default:
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
-                                                                        message:error.localizedDescription
-                                                                       delegate:nil
-                                                              cancelButtonTitle:@"Ok"
-                                                              otherButtonTitles:nil];
-                        [alert show];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
+//                                                                        message:error.localizedDescription
+//                                                                       delegate:nil
+//                                                              cancelButtonTitle:@"Ok"
+//                                                              otherButtonTitles:nil];
+//                        [alert show];
                         break;
                 }
             });
@@ -124,6 +125,7 @@ static TangoManager *_tangoManager = nil;
     NSLog(@"Passed params are : %@", parameters);
     NSString* CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
     
     void (^processResult)(TangoProfileResult *, NSError *) =
     ^(TangoProfileResult *result, NSError *error) {
@@ -231,6 +233,9 @@ static TangoManager *_tangoManager = nil;
                     }
                     
                 } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                               WithParameters:nil];
+                    
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                     message:@"Could not fetch profile."
                                                                    delegate:nil
@@ -240,6 +245,8 @@ static TangoManager *_tangoManager = nil;
                     [alert show];
                 }
             } else {
+                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                           WithParameters:nil];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:error.localizedDescription
                                                                delegate:nil
@@ -652,6 +659,7 @@ static TangoManager *_tangoManager = nil;
     NSLog(@"Passed params are : %@", parameters);
     NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     NSString * score_value = (NSString*)[parameters objectForKey:@"score_value"]; // 存储分数
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
     
     NSMutableSet * functions = [NSMutableSet set];
     [functions addObject:@"MAX"];
@@ -683,13 +691,17 @@ static TangoManager *_tangoManager = nil;
                 [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
                            WithParameters:nil];
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
-                                                                message:error.localizedDescription
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Ok"
-                                                      otherButtonTitles:nil];
-                
-                [alert show];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
+//                                                                message:error.localizedDescription
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"Ok"
+//                                                      otherButtonTitles:nil];
+//                
+//                [alert show];
+                if ([CPPFunctionToBeCalled_Error compare:@"NO"] != NSOrderedSame) {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                               WithParameters:nil];
+                }
             }
         });
     }];   
@@ -702,6 +714,7 @@ static TangoManager *_tangoManager = nil;
     NSLog(@"Passed params are : %@", parameters);
     NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
     NSString * CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
     
     TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
     [request setMetric:@"score" withFunction:kLeaderboardFunction ascending:YES];
@@ -809,12 +822,19 @@ static TangoManager *_tangoManager = nil;
                                WithParameters:dict];
                 }
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fetch Leader Board Error"
-                                                                message:error.localizedDescription
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Ok"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                
+                if ([CPPFunctionToBeCalled_Error compare:@"NO"] != NSOrderedSame) {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                               WithParameters:nil];
+                }
+                
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fetch Leader Board Error"
+//                                                                message:error.localizedDescription
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"Ok"
+//                                                      otherButtonTitles:nil];
+//                [alert show];
+                
             }
         });
     }];
