@@ -80,7 +80,7 @@ static TangoManager *_tangoManager = nil;
     NSDictionary *parameters = (NSDictionary*)prms;
     NSLog(@"Passed params are : %@", parameters);
     NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
-    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"is_authenticate_false_callback"];
     if (TangoSession.sharedSession.isAuthenticated) {
         // 已经授权
         [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
@@ -116,14 +116,15 @@ static TangoManager *_tangoManager = nil;
                         NSLog(@"TANGO_SDK_TANGO_APP_NO_SDK_SUPPORT");
                         [session installTango];
                         break;
-                        
                     default:
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
-//                                                                        message:error.localizedDescription
-//                                                                       delegate:nil
-//                                                              cancelButtonTitle:@"Ok"
-//                                                              otherButtonTitles:nil];
-//                        [alert show];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
+                                                                        message:@"Connection failed."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                                   WithParameters:nil];
                         break;
                 }
             });
@@ -360,12 +361,29 @@ static TangoManager *_tangoManager = nil;
                             jason_str = [jason_str stringByAppendingString:@","];
 //                        }
                         
-                        if (!profile.profilePictureIsPlaceholder) {
-                            UIImage * picture = profile.cachedProfilePicture;
-                            if (picture == nil) {
-                                [profile fetchProfilePictureWithHandler:^(UIImage *image) {
-                                    // Display the downloaded image.
-                                    NSData * data_pic = UIImagePNGRepresentation(image);
+                        if ([CPPFunctionToBeCalled_pic compare:@"NO"] != NSOrderedSame) {
+                            
+                            if (!profile.profilePictureIsPlaceholder) {
+                                UIImage * picture = profile.cachedProfilePicture;
+                                if (picture == nil) {
+                                    [profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                                        // Display the downloaded image.
+                                        NSData * data_pic = UIImagePNGRepresentation(image);
+                                        NSString * str_pic = [data_pic base64Encoding];
+                                        NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                                           profile.profileID,
+                                                                           str_pic];
+                                        NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                                        NSError * err_pic = nil;
+                                        NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                                  options:nil
+                                                                                                    error:&err_pic];
+                                        
+                                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                                    }];
+                                } else {
+                                    // Display the cached image.
+                                    NSData * data_pic = UIImagePNGRepresentation(picture);
                                     NSString * str_pic = [data_pic base64Encoding];
                                     NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
                                                                        profile.profileID,
@@ -377,23 +395,9 @@ static TangoManager *_tangoManager = nil;
                                                                                                 error:&err_pic];
                                     
                                     [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
-                                }];
-                            } else {
-                                // Display the cached image.
-                                NSData * data_pic = UIImagePNGRepresentation(picture);
-                                NSString * str_pic = [data_pic base64Encoding];
-                                NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
-                                                                   profile.profileID,
-                                                                   str_pic];
-                                NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
-                                NSError * err_pic = nil;
-                                NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
-                                                                                          options:nil
-                                                                                            error:&err_pic];
-                                
-                                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                                }
                             }
-                        }                        
+                        }
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                         message:@"Could not fetch profile."
