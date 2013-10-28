@@ -75,6 +75,23 @@ static TangoManager *_tangoManager = nil;
     return result;
 }
 
+- (void)isAuthenticate:(NSObject *)prms {
+    NSLog(@"isAuthenticate");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
+    if (TangoSession.sharedSession.isAuthenticated) {
+        // 已经授权
+        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                   WithParameters:nil];
+    } else {
+        // 没有授权
+        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                   WithParameters:nil];
+    }
+}
+
 - (void)authenticate:(NSObject *)prms {
     
     NSLog(@"authenticate");

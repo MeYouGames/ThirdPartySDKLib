@@ -29,6 +29,7 @@
             openURL:(NSURL *) url
   sourceApplication:(NSString *) requester;
 
+- (void)isAuthenticate:(NSObject *)prms; // 获取是否已经授权
 - (void)authenticate:(NSObject *)prms;
 - (void)getMyProfile:(NSObject *)prms; // 获取自己信息
 - (void)getFriendProfile:(NSObject *)prms // 获取朋友信息 (并不直接调用)
