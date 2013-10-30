@@ -31,8 +31,6 @@
 		329FEE8D181006A80057DEC0 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */; };
 		329FEE8E181006A80057DEC0 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */; };
 		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198C180AFADA007E5EA0 /* TangoManager.mm */; };
-		80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */; };
 		805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805119A6180B0D00007E5EA0 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -266,8 +264,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8051198F180AFADA007E5EA0 /* TangoManager.mm in Sources */,
-				80511990180AFADA007E5EA0 /* TangoSDKBridge.mm in Sources */,
 				329FEE8D181006A80057DEC0 /* NSData+MBBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
