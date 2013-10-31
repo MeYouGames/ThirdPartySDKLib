@@ -891,8 +891,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = @"This is awesome!";
-    message.descriptionText = @"Join me in BigBangRabbit! (@meyougames)";
+    message.messageText = @"Hi! I want to play Big Bang Rabbit for Tango with you! Come On!";
+    message.descriptionText = @"Hi! I want to play Big Bang Rabbit for Tango with you! Come On!";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
@@ -932,8 +932,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = @"This is awesome!";
-    message.descriptionText = @"Join me in BigBangRabbit! (@meyougames)";
+    message.messageText = @"I sent a Hearts to you, You can send me one do?";
+    message.descriptionText = @"I sent a Hearts to you, You can send me one do?";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
