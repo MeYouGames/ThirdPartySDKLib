@@ -10,7 +10,6 @@
 #import <TangoSDK/TangoSDK.h>
 #import "NSData+MBBase64.h"
 
-
 static NSString * const kLeaderboardFunction = @"MAX_THIS_WEEK";
 
 static const MessageHandler resultHandler = ^(NSError *error) {
@@ -306,7 +305,10 @@ static TangoManager *_tangoManager = nil;
 //                for (int index = 0; index < result.count; index++) {
 //                    TangoProfileEntry * profile = [result objectAtIndex:index];
 //                    bool isLast = index = result.count - 1 ? true : false;
-                
+                    if ([profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformIOS]] == false) {
+                        continue;
+                    }
+                    
                     if (profile != nil) {
                         self.profile = profile;
                         NSLog(@"Friend (%@) profile is getted.", profile.fullName);
@@ -766,6 +768,9 @@ static TangoManager *_tangoManager = nil;
                 NSString * jason_str = @"{\"leaderboard\":[";
                 
                 for(TangoLeaderboardEntry * entry in entries) {
+                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformIOS]] == false) {
+                        continue;
+                    }
                     
                     if ([CPPFunctionToBeCalled_pic compare:@"NO"] != NSOrderedSame) {
                         if (!entry.profile.profilePictureIsPlaceholder) {
