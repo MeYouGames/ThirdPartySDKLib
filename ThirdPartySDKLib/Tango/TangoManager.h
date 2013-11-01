@@ -31,7 +31,10 @@
 
 - (void)isAuthenticate:(NSObject *)prms; // 获取是否已经授权
 - (void)authenticate:(NSObject *)prms;
+
+// 如果自己的名字full_name为空，则在jason中组装“You”发出
 - (void)getMyProfile:(NSObject *)prms; // 获取自己信息
+
 - (void)getFriendProfile:(NSObject *)prms // 获取朋友信息 (并不直接调用)
                useCached:(BOOL)cached; 
 - (void)getFriendProfile_cached:(NSObject *)prms;
@@ -43,6 +46,8 @@
 //- (void)loadMetrics:(NSObject *)prms; // 提取参数
 //- (void)saveMetrics:(NSObject *)prms; // 保存参数
 - (void)saveScore:(NSObject *)prms; // 保存成绩
+
+// 无法将自己的空名字变成“You”
 - (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
 
 - (void)sendInventationMessageWithUrl:(NSObject *)prms;

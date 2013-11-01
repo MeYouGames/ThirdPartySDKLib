@@ -117,7 +117,7 @@ static TangoManager *_tangoManager = nil;
                         break;
                     default:
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
-                                                                        message:@"Connection failed."
+                                                                        message:@"Your Tango account needs to be validated before connecting to Tango"
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -187,6 +187,9 @@ static TangoManager *_tangoManager = nil;
                      }
                      }
                      */
+                    if ([profile.fullName compare:@""] == NSOrderedSame) {
+                        [profile.fullName initWithString:@"You"];
+                    }
                     NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
                                             profile.firstName,
                                             profile.lastName,
@@ -401,8 +404,8 @@ static TangoManager *_tangoManager = nil;
                             }
                         }
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                        message:@"Could not fetch profile."
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                        message:@"Connection error. Please try again later."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -430,8 +433,8 @@ static TangoManager *_tangoManager = nil;
                 }
 
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:error.localizedDescription
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                message:@"Connection error. Please try again later."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -498,8 +501,8 @@ static TangoManager *_tangoManager = nil;
                         jason_str = [jason_str stringByAppendingString:@","];
                         
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                        message:@"Could not fetch possession."
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                        message:@"Connection error. Please try again later."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -531,8 +534,8 @@ static TangoManager *_tangoManager = nil;
                 }
                 
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Get Possessions Error"
-                                                                message:error.localizedDescription
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                message:@"Connection error. Please try again later."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -596,8 +599,8 @@ static TangoManager *_tangoManager = nil;
                         jason_str = [jason_str stringByAppendingString:@","];
                         
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                        message:@"Could not fetch possession."
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                        message:@"Connection error. Please try again later."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -646,8 +649,8 @@ static TangoManager *_tangoManager = nil;
                     message = result.error.localizedDescription;
                 }
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set Possessions Error"
-                                                                message:message
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                message:@"Connection error. Please try again later."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -768,7 +771,7 @@ static TangoManager *_tangoManager = nil;
                 NSString * jason_str = @"{\"leaderboard\":[";
                 
                 for(TangoLeaderboardEntry * entry in entries) {
-                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformIOS]] == false) {
+                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
                         continue;
                     }
                     
