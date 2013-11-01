@@ -286,7 +286,8 @@ static TangoManager *_tangoManager = nil;
 }
 
 - (void)getFriendProfile:(NSObject *)prms
-               useCached:(BOOL)cached {
+               useCached:(BOOL)cached
+               hasTheApp:(BOOL)hasTheApp {
     NSLog(@"getFriendProfile");
     NSDictionary *parameters = (NSDictionary*)prms;
     NSLog(@"Passed params are : %@", parameters);
@@ -308,8 +309,14 @@ static TangoManager *_tangoManager = nil;
 //                for (int index = 0; index < result.count; index++) {
 //                    TangoProfileEntry * profile = [result objectAtIndex:index];
 //                    bool isLast = index = result.count - 1 ? true : false;
-                    if ([profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformIOS]] == false) {
+                    if ([profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
                         continue;
+                    }
+                    
+                    if (hasTheApp == false) {
+                        if (profile.hasTheApp) {
+                            continue;
+                        }
                     }
                     
                     if (profile != nil) {
@@ -457,12 +464,14 @@ static TangoManager *_tangoManager = nil;
 }
 
 - (void)getFriendProfile_cached:(NSObject *)prms {
-    [self getFriendProfile:prms useCached:YES];
+    [self getFriendProfile:prms useCached:YES hasTheApp:false];
 }
 
 - (void)getFriendProfile_current:(NSObject *)prms {
-    [self getFriendProfile:prms useCached:NO];
+    [self getFriendProfile:prms useCached:NO hasTheApp:false];
 }
+
+
 
 - (void)loadPossessions:(NSObject *)prms {
     NSLog(@"loadPossessions");

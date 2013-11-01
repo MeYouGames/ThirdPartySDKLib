@@ -35,8 +35,10 @@
 // 如果自己的名字full_name为空，则在jason中组装“You”发出
 - (void)getMyProfile:(NSObject *)prms; // 获取自己信息
 
-- (void)getFriendProfile:(NSObject *)prms // 获取朋友信息 (并不直接调用)
-               useCached:(BOOL)cached; 
+// 获取朋友信息 (并不直接调用)
+- (void)getFriendProfile:(NSObject *)prms
+               useCached:(BOOL)cached
+               hasTheApp:(BOOL)hasTheApp;
 - (void)getFriendProfile_cached:(NSObject *)prms;
 - (void)getFriendProfile_current:(NSObject *)prms;
 
