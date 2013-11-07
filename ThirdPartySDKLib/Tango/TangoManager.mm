@@ -410,7 +410,7 @@ static TangoManager *_tangoManager = nil;
                         }
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                        message:@"Connection error. Please try again later."
+                                                                        message:@"Please check your network settings and try again."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -439,7 +439,7 @@ static TangoManager *_tangoManager = nil;
 
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                message:@"Connection error. Please try again later."
+                                                                message:@"Please check your network settings and try again."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -509,7 +509,7 @@ static TangoManager *_tangoManager = nil;
                         
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                        message:@"Connection error. Please try again later."
+                                                                        message:@"Please check your network settings and try again."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -542,7 +542,7 @@ static TangoManager *_tangoManager = nil;
                 
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                message:@"Connection error. Please try again later."
+                                                                message:@"Please check your network settings and try again."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -607,7 +607,7 @@ static TangoManager *_tangoManager = nil;
                         
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                        message:@"Connection error. Please try again later."
+                                                                        message:@"Please check your network settings and try again."
                                                                        delegate:nil
                                                               cancelButtonTitle:@"Ok"
                                                               otherButtonTitles:nil];
@@ -657,7 +657,7 @@ static TangoManager *_tangoManager = nil;
                 }
                 
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                message:@"Connection error. Please try again later."
+                                                                message:@"Please check your network settings and try again."
                                                                delegate:nil
                                                       cancelButtonTitle:@"Ok"
                                                       otherButtonTitles:nil];
@@ -947,8 +947,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = @"I sent a Hearts to you, You can send me one do?";
-    message.descriptionText = @"I sent a Hearts to you, You can send me one do?";
+    message.messageText = @"I sent a Heart to you, can you send me one too?";
+    message.descriptionText = @"I sent a Heart to you, can you send me one too?";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
