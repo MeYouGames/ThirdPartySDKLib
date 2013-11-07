@@ -187,9 +187,7 @@ static TangoManager *_tangoManager = nil;
                      }
                      }
                      */
-                    if ([profile.fullName compare:@""] == NSOrderedSame) {
-                        [profile.fullName initWithString:@"You"];
-                    }
+                    
                     NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
                                             profile.firstName,
                                             profile.lastName,
