@@ -670,20 +670,23 @@ static TangoManager *_tangoManager = nil;
 
 //- (void)loadMetrics:(NSObject *)prms {
 //    NSLog(@"loadMetrics");
+//
+////    TangoMetricsGetRequest * request = [[TangoMetricsGetRequest alloc] init];
+////    
+////    [request setMetric:metrics_name withFunction:metrics_name];
+//}
+//
+//- (void)saveMetrics:(NSObject *)prms {
+//    NSLog(@"saveMetrics");
+//    
 //    NSDictionary *parameters = (NSDictionary*)prms;
 //    NSLog(@"Passed params are : %@", parameters);
 //    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
 //    NSString * metrics_profile_id = (NSString*)[parameters objectForKey:@"metrics_profile_id"]; // 账户id
 //    NSString * metrics_name = (NSString*)[parameters objectForKey:@"metrics_name"]; // 存储财产名
 //    NSString * metrics_value = (NSString*)[parameters objectForKey:@"metrics_value"]; // 存储财产值
-//
-//    TangoMetricsGetRequest * request = [[TangoMetricsGetRequest alloc] init];
 //    
-//    [request setMetric:metrics_name withFunction:metrics_name];
-//}
-
-//- (void)saveMetrics:(NSObject *)prms {
-//    NSLog(@"saveMetrics");
+//    
 //}
 
 - (void)saveScore:(NSObject *)prms; {
