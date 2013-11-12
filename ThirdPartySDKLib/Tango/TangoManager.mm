@@ -113,7 +113,10 @@ static TangoManager *_tangoManager = nil;
                         NSLog(@"TANGO_SDK_TANGO_APP_NOT_INSTALLED");
                     case TANGO_SDK_TANGO_APP_NO_SDK_SUPPORT:
                         NSLog(@"TANGO_SDK_TANGO_APP_NO_SDK_SUPPORT");
-                        [session installTango];
+//                        [session installTango];
+                        // 需求变更 直接返回错误 进入Guest
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                                   WithParameters:nil];
                         break;
                     default:
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
