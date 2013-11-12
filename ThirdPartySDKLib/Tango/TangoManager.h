@@ -53,7 +53,8 @@
 - (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
 
 - (void)sendInventationMessageWithUrl:(NSObject *)prms;
-- (void)sendHeartMessage:(NSString *)profileID;
+- (void)sendHeartMessage:(NSObject *)prms;
+- (void)sendBragMessage:(NSObject *)prms;
 
 - (void)SampleSelector:(NSObject *)prms;
 

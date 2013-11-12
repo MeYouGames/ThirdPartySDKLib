@@ -958,6 +958,45 @@ static TangoManager *_tangoManager = nil;
     [TangoMessaging sendMessage:message toRecipients:@[profile_id]];
 }
 
+- (void)sendBragMessage:(NSObject *)prms
+{
+    NSLog(@"sendInventationMessageWithUrl");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    //    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * profile_id = (NSString *)[parameters objectForKey:@"profile_id"]; // target id
+    NSString * sender_full_name = (NSString *)[parameters objectForKey:@"sender_full_name"]; // sender name
+    
+    NSURL * actionURL = [NSURL URLWithString:@"bigbangrabbit4t://invitation"];
+    
+    TangoActionMap *actions = [[TangoActionMap alloc] init];
+    [actions setActionForPlatform:TangoSdkPlatformFallback
+                          withURL:[NSURL URLWithString:@"http://www.tango.me"]
+                     actionPrompt:@"Check it out!"
+                         mimeType:@"text/url"];
+    
+    // LAUNCH_CONTEXT is a placeholder. It will be used by Tango to pass launch context
+    // (e.g. conversation id and participants)
+    // Note that uri string must be RFC3986 compliant.
+    [actions setActionForPlatform:TangoSdkPlatformIOS
+                          withURL:actionURL
+                     actionPrompt:@"Tap to play!"
+                         mimeType:@"text/url"];
+    
+    [actions setActionForPlatform:TangoSdkPlatformAndroid
+                          withURL:actionURL
+                     actionPrompt:@"Tap to Play"
+                         mimeType:@"text/url"];
+    TangoMessage *message = [[TangoMessage alloc] init];
+    
+    message.messageText = [NSString stringWithFormat:@"%@ defeated you in BigBangRabbit.", sender_full_name];
+    message.descriptionText = @"Hi! I defeated you.";
+    message.actionMap = actions;
+    message.resultHandler = resultHandler;
+    
+    [TangoMessaging sendMessage:message toRecipients:@[profile_id]];
+}
+
 - (void)SampleSelector:(NSObject *)prms
 {
     NSLog(@"purchase something called");
