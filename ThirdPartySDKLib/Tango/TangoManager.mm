@@ -299,6 +299,7 @@ static TangoManager *_tangoManager = nil;
     ^(TangoProfileResult *result, NSError*error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if(error.code == 0) {
+                _friendProfileResult = result;
                 /* jason:
                  {"firend_profile":[
                     {*},{*}
@@ -472,7 +473,52 @@ static TangoManager *_tangoManager = nil;
     [self getFriendProfile:prms useCached:NO hasTheApp:false];
 }
 
-
+- (void)getProfileAvatar:(NSObject *)prms {
+    NSLog(@"getProfileAvatar");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
+    NSString* profile_id = (NSString*)[parameters objectForKey:@"profile_id"];
+    
+    for (TangoProfileEntry * profile in _friendProfileResult) {
+        if ([profile.profileID compare:profile_id] == NSOrderedSame) {
+            if (!profile.profilePictureIsPlaceholder) {
+                UIImage * picture = profile.cachedProfilePicture;
+                if (picture == nil) {
+                    [profile fetchProfilePictureWithHandler:^(UIImage *image) {
+                        // Display the downloaded image.
+                        NSData * data_pic = UIImagePNGRepresentation(image);
+                        NSString * str_pic = [data_pic base64Encoding];
+                        NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                           profile.profileID,
+                                                           str_pic];
+                        NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError * err_pic = nil;
+                        NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                                  options:nil
+                                                                                    error:&err_pic];
+                        
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                    }];
+                } else {
+                    // Display the cached image.
+                    NSData * data_pic = UIImagePNGRepresentation(picture);
+                    NSString * str_pic = [data_pic base64Encoding];
+                    NSString * jason_my_profile_pic = [NSString stringWithFormat:@"{\"friend_profile_pic\":{\"profile_id\":\"%@\",\"picture\":\"%@\"}}",
+                                                       profile.profileID,
+                                                       str_pic];
+                    NSData * jason_pic_data = [jason_my_profile_pic dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError * err_pic = nil;
+                    NSDictionary * dict_pic = [NSJSONSerialization JSONObjectWithData:jason_pic_data
+                                                                              options:nil
+                                                                                error:&err_pic];
+                    
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_pic WithParameters:dict_pic];
+                }
+            }
+        }
+    }
+}
 
 - (void)loadPossessions:(NSObject *)prms {
     NSLog(@"loadPossessions");
