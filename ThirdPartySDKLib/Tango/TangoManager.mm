@@ -992,8 +992,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = [NSString stringWithFormat:@"%@ defeated you in BigBangRabbit.", sender_full_name];
-    message.descriptionText = @"Hi! I defeated you.";
+    message.messageText = [NSString stringWithFormat:@"%@ beat your score.", sender_full_name];
+    message.descriptionText = @"I beat your score in BigBangRabbit!";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
