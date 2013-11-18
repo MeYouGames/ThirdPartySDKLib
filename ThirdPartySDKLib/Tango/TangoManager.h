@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) TangoProfileEntry * profile;
 @property (nonatomic, strong) NSArray * possessions;
-@property (nonatomic, strong) TangoProfileResult * friendProfileResult;
+@property (nonatomic, strong) NSMutableArray * friendProfileArray;
 
 + (TangoManager *) sharedInstance;
 

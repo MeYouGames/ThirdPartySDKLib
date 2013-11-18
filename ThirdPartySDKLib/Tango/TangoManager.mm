@@ -299,7 +299,7 @@ static TangoManager *_tangoManager = nil;
     ^(TangoProfileResult *result, NSError*error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if(error.code == 0) {
-                _friendProfileResult = result;
+                [_friendProfileArray removeAllObjects];
                 /* jason:
                  {"firend_profile":[
                     {*},{*}
@@ -308,6 +308,7 @@ static TangoManager *_tangoManager = nil;
                  */
                 NSString * jason_str = @"{\"firend_profile\":[";
                 for (TangoProfileEntry * profile in result.profileEnumerator) {
+                    [_friendProfileArray addObject:profile];
 //                for (int index = 0; index < result.count; index++) {
 //                    TangoProfileEntry * profile = [result objectAtIndex:index];
 //                    bool isLast = index = result.count - 1 ? true : false;
@@ -365,7 +366,7 @@ static TangoManager *_tangoManager = nil;
                                                 profile.profileID,
                                                 str_gender,
                                                 profile.profilePictureURL,
-                                                profile.status,
+                                                [profile.status stringByReplacingOccurrencesOfString:@"\"" withString:@" "],
                                                 str_place_holder
                                                 ];
                         jason_str = [jason_str stringByAppendingString:jason_str_inner];
@@ -480,7 +481,7 @@ static TangoManager *_tangoManager = nil;
     NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
     NSString* profile_id = (NSString*)[parameters objectForKey:@"profile_id"];
     
-    for (TangoProfileEntry * profile in _friendProfileResult) {
+    for (TangoProfileEntry * profile in _friendProfileArray) {
         if ([profile.profileID compare:profile_id] == NSOrderedSame) {
             if (!profile.profilePictureIsPlaceholder) {
                 UIImage * picture = profile.cachedProfilePicture;
@@ -999,8 +1000,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = @"I sent a Heart to you, can you send me one too?";
-    message.descriptionText = @"I sent a Heart to you, can you send me one too?";
+    message.messageText = @"I sent you a heart. Can you send me one as well?";
+    message.descriptionText = @"I sent you a heart. Can you send me one as well?";
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
@@ -1038,8 +1039,8 @@ static TangoManager *_tangoManager = nil;
                          mimeType:@"text/url"];
     TangoMessage *message = [[TangoMessage alloc] init];
     
-    message.messageText = [NSString stringWithFormat:@"%@ beat your score.", sender_full_name];
-    message.descriptionText = @"I beat your score in BigBangRabbit!";
+    message.messageText = @"I beat your score in BigBangRabbit!";
+    message.descriptionText = [NSString stringWithFormat:@"%@ beat your score.", sender_full_name];
     message.actionMap = actions;
     message.resultHandler = resultHandler;
     
