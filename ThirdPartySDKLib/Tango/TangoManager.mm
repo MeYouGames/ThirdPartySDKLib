@@ -481,7 +481,14 @@ static TangoManager *_tangoManager = nil;
     NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
     NSString* profile_id = (NSString*)[parameters objectForKey:@"profile_id"];
     
+    if (_friendProfileArray == nil) {
+        return;
+    }
+    
     for (TangoProfileEntry * profile in _friendProfileArray) {
+        if (profile == nil) {
+            return;
+        }
         if ([profile.profileID compare:profile_id] == NSOrderedSame) {
             if (!profile.profilePictureIsPlaceholder) {
                 UIImage * picture = profile.cachedProfilePicture;
