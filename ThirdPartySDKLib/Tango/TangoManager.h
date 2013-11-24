@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "SynthesizeSingleton.h"
 #include "IOSNDKHelper.h"
 #import <TangoSDK/TangoSDK.h>
 
