@@ -11,6 +11,7 @@
 #import "NSData+MBBase64.h"
 
 static NSString * const kLeaderboardFunction = @"MAX_THIS_WEEK";
+static NSString * const kLeaderboardFunction_max = @"MAX";
 
 static const MessageHandler resultHandler = ^(NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -801,6 +802,61 @@ static TangoManager *_tangoManager = nil;
                        
 }
 
+- (void)saveLevel:(NSObject *)prms; {
+    NSLog(@"saveLevel");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * score_value = (NSString*)[parameters objectForKey:@"level_value"]; // 存储分数
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
+    
+    NSMutableSet * functions = [NSMutableSet set];
+    [functions addObject:@"MAX"];
+    [functions addObject:@"MAX_THIS_WEEK"];
+    [functions addObject:@"MAX_LAST_WEEK"];
+    [functions addObject:@"MAX_THIS_DAY"];
+    [functions addObject:@"MAX_LAST_DAY"];
+    [functions addObject:@"MAX_THIS_HOUR"];
+    [functions addObject:@"MAX_LAST_HOUR"];
+    [functions addObject:@"MIN"];
+    [functions addObject:@"SUM"];
+    [functions addObject:@"COUNT"];
+    [functions addObject:@"AVE"];
+    
+    TangoMetricsSetRequest *request = [[TangoMetricsSetRequest alloc ] init];
+    [request setMetric:@"level"
+             withValue:[score_value integerValue]
+         withFunctions:functions.allObjects];
+    
+    [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error.code == 0) {
+                for (TangoMetric *metric in metrics) {
+                    NSLog( @"Saved Metric Name: %@" , metric.name);
+                    NSLog( @"Saved Metric Value: %d" , metric.value);
+                    NSLog( @"Saved Metric Function Type: %@" , metric.function);
+                    NSLog( @"Saved Metric Last Modified Date: %@" , metric.lastModified);
+                }
+                [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                           WithParameters:nil];
+            } else {
+                //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
+                //                                                                message:error.localizedDescription
+                //                                                               delegate:nil
+                //                                                      cancelButtonTitle:@"Ok"
+                //                                                      otherButtonTitles:nil];
+                //
+                //                [alert show];
+                if ([CPPFunctionToBeCalled_Error compare:@"NO"] != NSOrderedSame) {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                               WithParameters:nil];
+                }
+            }
+        });
+    }];   
+    
+}
+
 - (void)fetchLeaderBoard:(NSObject *)prms {
     NSLog(@"fetchLeaderBoard");
     NSDictionary *parameters = (NSDictionary*)prms;
@@ -811,7 +867,7 @@ static TangoManager *_tangoManager = nil;
     
     TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
     [request setMetric:@"score" withFunction:kLeaderboardFunction ascending:YES];
-    
+    [request setMetric:@"level" withFunction:kLeaderboardFunction_max ascending:YES];
     /* jason:
      {"leaderboard":[
      {*},{*}
@@ -897,10 +953,12 @@ static TangoManager *_tangoManager = nil;
                     jason_str_inner = [jason_str_inner stringByAppendingString:@"}},"];
                     
                     jason_str = [jason_str stringByAppendingString:jason_str_inner];
+                    
                 }
                 
                 jason_str = [jason_str substringToIndex:[jason_str length]-1];
                 jason_str = [jason_str stringByAppendingString:@"]}"];
+                
                 
                 
                 NSLog(@"jason: %@", jason_str);

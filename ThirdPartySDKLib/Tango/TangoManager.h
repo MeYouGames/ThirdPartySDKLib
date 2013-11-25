@@ -51,6 +51,7 @@
 //- (void)loadMetrics:(NSObject *)prms; // 提取参数
 //- (void)saveMetrics:(NSObject *)prms; // 保存参数
 - (void)saveScore:(NSObject *)prms; // 保存成绩
+- (void)saveLevel:(NSObject *)prms; // 保存等级
 
 // 无法将自己的空名字变成“You”
 - (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
