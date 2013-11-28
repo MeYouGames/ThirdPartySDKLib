@@ -10,6 +10,6 @@ import android.util.Log;
 public class TangoSDKBridge {
 
     static void initSDK() {
-        Log.d("TangoSDKBridge", "TangoSDK is init from java !");
+        TangoManager.getInstance().initSDK();
     }
 }
