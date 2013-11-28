@@ -22,8 +22,6 @@ public:
     
     static void Authenticate();
     
-    static bool uImage2cTexture(void* uiImage, CCTexture2D* tex);
-    
     static CCTexture2D * CCString2CCTexture2D(CCString * str);
 };
 

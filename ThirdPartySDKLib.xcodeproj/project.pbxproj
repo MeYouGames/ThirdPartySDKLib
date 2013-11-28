@@ -71,7 +71,6 @@
 		80511978180AFA97007E5EA0 /* libThirdPartySDKLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThirdPartySDKLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8051197B180AFA97007E5EA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8051197F180AFA97007E5EA0 /* ThirdPartySDKLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ThirdPartySDKLib-Prefix.pch"; sourceTree = "<group>"; };
-		8051198A180AFADA007E5EA0 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		8051198B180AFADA007E5EA0 /* TangoManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = TangoManager.h; sourceTree = "<group>"; };
 		8051198C180AFADA007E5EA0 /* TangoManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TangoManager.mm; sourceTree = "<group>"; };
 		8051198D180AFADA007E5EA0 /* TangoSDKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangoSDKBridge.h; sourceTree = "<group>"; };
@@ -180,7 +179,6 @@
 				8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */,
 				8051198B180AFADA007E5EA0 /* TangoManager.h */,
 				8051198C180AFADA007E5EA0 /* TangoManager.mm */,
-				8051198A180AFADA007E5EA0 /* SynthesizeSingleton.h */,
 			);
 			path = Tango;
 			sourceTree = "<group>";
@@ -297,10 +295,10 @@
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/include\"",
+					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/SDK/iOS/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/SDK/iOS/lib\"";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThirdPartySDKLib_Tango;
@@ -334,10 +332,10 @@
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/include\"",
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../GameFoundation/cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/include\"",
+					"\"$(SRCROOT)/ThirdPartySDKLib/Tango/SDK/iOS/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/sdk/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/ThirdPartySDKLib/Tango/SDK/iOS/lib\"";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThirdPartySDKLib_Tango;
