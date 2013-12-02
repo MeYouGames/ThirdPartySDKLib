@@ -238,7 +238,6 @@ static TangoManager *_tangoManager = nil;
                      }
                      }
                      */
-                    
                     NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
                                             profile.firstName,
                                             profile.lastName,
@@ -249,6 +248,7 @@ static TangoManager *_tangoManager = nil;
                                             profile.status,
                                             str_place_holder
                                             ];
+                    
                     
                     NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
                     NSError * err = nil;
@@ -818,6 +818,10 @@ static TangoManager *_tangoManager = nil;
     TangoMetricsSetRequest *request = [[TangoMetricsSetRequest alloc ] init];
     [request setMetric:@"score"
              withValue:[score_value integerValue]
+          withFunctions:functions.allObjects];
+    
+    [request setMetric:@"score_uploaded"
+             withValue:1
           withFunctions:functions.allObjects];
     
     [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
