@@ -139,6 +139,53 @@ static TangoManager *_tangoManager = nil;
     }
 }
 
+- (void)authenticate_inst_tango:(NSObject *)prms {
+    
+    NSLog(@"authenticate_inst_tango");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
+    if (!TangoSession.sharedSession.isAuthenticated){
+        NSLog(@"TangoSession.sharedSession.isAuthenticated = false");
+        [TangoSession.sharedSession authenticateWithHandler:^(TangoSession *session, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                switch (error.code) {
+                    case TANGO_SDK_SUCCESS:
+                        NSLog(@"TANGO_SDK_SUCCESS");
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                                   WithParameters:nil];
+                        break;
+                        
+                    case TANGO_SDK_TANGO_APP_NOT_INSTALLED:
+                        NSLog(@"TANGO_SDK_TANGO_APP_NOT_INSTALLED");
+                    case TANGO_SDK_TANGO_APP_NO_SDK_SUPPORT:
+                        NSLog(@"TANGO_SDK_TANGO_APP_NO_SDK_SUPPORT");
+                        [session installTango];
+                        // 需求变更 直接返回错误 进入Guest
+//                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+//                                   WithParameters:nil];
+                        break;
+                    default:
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
+                                                                        message:@"Your Tango account needs to be validated before connecting to Tango"
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                                   WithParameters:nil];
+                        break;
+                }
+            });
+        }];
+    } else {
+        NSLog(@"TangoSession.sharedSession.isAuthenticated = true");
+        [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                   WithParameters:nil];
+    }
+}
+
 - (void)getMyProfile:(NSObject *)prms {
     
     NSLog(@"getMyProfile");

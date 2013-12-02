@@ -31,7 +31,7 @@
 
 - (void)isAuthenticate:(NSObject *)prms; // 获取是否已经授权
 - (void)authenticate:(NSObject *)prms;
-
+- (void)authenticate_inst_tango:(NSObject *)prms;
 // 如果自己的名字full_name为空，则在jason中组装“You”发出
 - (void)getMyProfile:(NSObject *)prms; // 获取自己信息
 
