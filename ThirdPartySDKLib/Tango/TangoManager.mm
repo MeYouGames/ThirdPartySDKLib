@@ -49,7 +49,8 @@ static TangoManager *_tangoManager = nil;
 - (void)initSDK{
     NSLog(@"init tango sdk");
     [IOSNDKHelper SetNDKReciever:self];
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsChanged:) name:TangoSessionEventPostedTangoSessionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactsChanged:) name:TangoSessionEventPostedTangoSessionNotification object:nil];
+    self.friendProfileArray = [[NSMutableArray alloc] init];
 }
 
 - (void)sessionInitialize {
@@ -347,7 +348,7 @@ static TangoManager *_tangoManager = nil;
     ^(TangoProfileResult *result, NSError*error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if(error.code == 0) {
-                [_friendProfileArray removeAllObjects];
+                [self.friendProfileArray removeAllObjects];
                 /* jason:
                  {"firend_profile":[
                     {*},{*}
@@ -356,7 +357,7 @@ static TangoManager *_tangoManager = nil;
                  */
                 NSString * jason_str = @"{\"firend_profile\":[";
                 for (TangoProfileEntry * profile in result.profileEnumerator) {
-                    [_friendProfileArray addObject:profile];
+                    [self.friendProfileArray addObject:profile];
 //                for (int index = 0; index < result.count; index++) {
 //                    TangoProfileEntry * profile = [result objectAtIndex:index];
 //                    bool isLast = index = result.count - 1 ? true : false;
@@ -529,12 +530,14 @@ static TangoManager *_tangoManager = nil;
     NSString* CPPFunctionToBeCalled_pic = (NSString*)[parameters objectForKey:@"picture_callback"];
     NSString* profile_id = (NSString*)[parameters objectForKey:@"profile_id"];
     
-    if (_friendProfileArray == nil) {
+    if (self.friendProfileArray == nil) {
         return;
+        NSLog(@"_friendProfileArray == nil");
     }
     
-    for (TangoProfileEntry * profile in _friendProfileArray) {
+    for (TangoProfileEntry * profile in self.friendProfileArray) {
         if (profile == nil) {
+            NSLog(@"TangoProfileEntry * profile == nil");
             return;
         }
         if ([profile.profileID compare:profile_id] == NSOrderedSame) {
