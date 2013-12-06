@@ -239,6 +239,13 @@ static TangoManager *_tangoManager = nil;
                      }
                      }
                      */
+                    
+                    NSString * profile_status = profile.status;
+                    profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\"" withString:@" "];
+                    profile_status = [profile_status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\r" withString:@" "];
+                    profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                    
                     NSString * jason_str = [NSString stringWithFormat:@"{\"my_profile\":{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}}",
                                             profile.firstName,
                                             profile.lastName,
@@ -246,7 +253,7 @@ static TangoManager *_tangoManager = nil;
                                             profile.profileID,
                                             str_gender,
                                             profile.profilePictureURL,
-                                            profile.status,
+                                            profile_status,
                                             str_place_holder
                                             ];
                     
@@ -408,6 +415,13 @@ static TangoManager *_tangoManager = nil;
                          }
                          
                          */
+                        
+                        NSString * profile_status = profile.status;
+                        profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\"" withString:@" "];
+                        profile_status = [profile_status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                        profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\r" withString:@" "];
+                        profile_status = [profile_status stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                        
                         NSString * jason_str_inner = [NSString stringWithFormat:@"{\"first_name\":\"%@\",\"last_name\":\"%@\",\"full_name\":\"%@\",\"profile_id\":\"%@\",\"gender\":\"%@\",\"picture_url\":\"%@\",\"status\":\"%@\",\"place_holder\":\"%@\"}",
                                                 profile.firstName,
                                                 profile.lastName,
@@ -415,7 +429,7 @@ static TangoManager *_tangoManager = nil;
                                                 profile.profileID,
                                                 str_gender,
                                                 profile.profilePictureURL,
-                                                [profile.status stringByReplacingOccurrencesOfString:@"\"" withString:@" "],
+                                                profile_status,
                                                 str_place_holder
                                                 ];
                         jason_str = [jason_str stringByAppendingString:jason_str_inner];
