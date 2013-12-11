@@ -11,6 +11,7 @@
 #import "NSData+MBBase64.h"
 
 static NSString * const kLeaderboardFunction = @"MAX_THIS_WEEK";
+static NSString * const kLeaderboardFunction_last_week = @"MAX_LAST_WEEK";
 static NSString * const kLeaderboardFunction_max = @"MAX";
 
 static const MessageHandler resultHandler = ^(NSError *error) {
@@ -1056,6 +1057,92 @@ static TangoManager *_tangoManager = nil;
 //                                                      cancelButtonTitle:@"Ok"
 //                                                      otherButtonTitles:nil];
 //                [alert show];
+                
+            }
+        });
+    }];
+}
+
+- (void)fetchLeaderBoard_lastweek:(NSObject *)prms {
+    NSLog(@"fetchLeaderBoard_lastweek");
+    NSDictionary *parameters = (NSDictionary*)prms;
+    NSLog(@"Passed params are : %@", parameters);
+    NSString * CPPFunctionToBeCalled = (NSString*)[parameters objectForKey:@"simple_callback"];
+    NSString * CPPFunctionToBeCalled_Error = (NSString*)[parameters objectForKey:@"error_callback"];
+    
+    TangoLeaderboardRequest * request = [[TangoLeaderboardRequest alloc] init];
+    [request setMetric:@"score" withFunction:kLeaderboardFunction_last_week ascending:YES];
+    
+    [TangoLeaderboard fetch:request withHandler:^(NSArray *entries, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error.code == 0) {
+                
+                /* jason:
+                 
+                 {
+                 "profile_id":"t2MNHKigKwH4GExRtSqMag",
+                 "full_name":"王 一纯",
+                 "metrics":{
+                 "*":"*",
+                 "*":"*"
+                 }
+                 }
+                 */
+                
+                NSString * jason_str = @"{\"leaderboard\":[";
+                
+                for(TangoLeaderboardEntry * entry in entries) {
+                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
+                        continue;
+                    }
+                    
+                    NSString * jason_str_inner = [NSString stringWithFormat:@"{\"profile_id\":\"%@\",\"full_name\":\"%@\",\"metrics\":{",
+                                                  entry.profile.profileID,
+                                                  entry.profile.fullName
+                                                  ];
+                    
+                    NSLog(@"User name: %@", entry.profile.fullName);
+                    
+                    for (TangoMetric * metric in entry.metrics) {
+                        NSString * jason_str_metrics = [NSString stringWithFormat:@"\"%@\":\"%d\",", metric.name, metric.value];
+                        jason_str_inner = [jason_str_inner stringByAppendingString:jason_str_metrics];
+                        
+                        NSLog( @"Metric name: %@" , metric.name);
+                        NSLog( @"Metric value: %d" , metric.value);
+                    }
+                    
+                    jason_str_inner = [jason_str_inner substringToIndex:[jason_str_inner length]-1];
+                    jason_str_inner = [jason_str_inner stringByAppendingString:@"}},"];
+                    
+                    jason_str = [jason_str stringByAppendingString:jason_str_inner];
+                    
+                }
+                
+                jason_str = [jason_str substringToIndex:[jason_str length]-1];
+                jason_str = [jason_str stringByAppendingString:@"]}"];
+                
+                
+                
+                NSLog(@"jason: %@", jason_str);
+                
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
+                if (err != nil) { // 有错误
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:nil];
+                } else {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
+                               WithParameters:dict];
+                }
+            } else {
+                
+                if ([CPPFunctionToBeCalled_Error compare:@"NO"] != NSOrderedSame) {
+                    [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
+                               WithParameters:nil];
+                }
                 
             }
         });
