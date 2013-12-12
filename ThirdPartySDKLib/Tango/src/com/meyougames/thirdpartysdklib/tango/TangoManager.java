@@ -39,7 +39,7 @@ public class TangoManager {
     void  initSDK() {
         Log.d("TangoSDKBridge", "TangoSDK is init from java, all tango features should be implemented in this class !");
         
-        AndroidNDKHelper.SetNDKReciever(this);
+       // AndroidNDKHelper.SetNDKReciever(this);
         
 //        String ns = context.NOTIFICATION_SERVICE;
 //        NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(ns);
