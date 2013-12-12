@@ -54,6 +54,7 @@
 
 // 无法将自己的空名字变成“You”
 - (void)fetchLeaderBoard:(NSObject *)prms; // 获取排行榜
+- (void)fetchLeaderBoard_lastweek:(NSObject *)prms; // 获取上周排行榜
 
 - (void)sendInventationMessageWithUrl:(NSObject *)prms;
 - (void)sendHeartMessage:(NSObject *)prms;
