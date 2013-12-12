@@ -57,6 +57,8 @@ static TangoManager *_tangoManager = nil;
 - (void)sessionInitialize {
     if(![TangoSession sessionInitialize]){
         NSLog(@"Error Initializing the session");
+    } else {
+        NSLog(@"Success Initializing the session");
     }
 }
 
@@ -844,30 +846,42 @@ static TangoManager *_tangoManager = nil;
     
     [TangoMetrics send :request withHandler:^( NSArray *metrics , NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSDate * last_modified_date;
             if (error.code == 0) {
                 for (TangoMetric *metric in metrics) {
                     NSLog( @"Saved Metric Name: %@" , metric.name);
                     NSLog( @"Saved Metric Value: %d" , metric.value);
                     NSLog( @"Saved Metric Function Type: %@" , metric.function);
                     NSLog( @"Saved Metric Last Modified Date: %@" , metric.lastModified);
+                    
+                    if ([metric.function  isEqual: @"COUNT"]) {
+                        last_modified_date = metric.lastModified;
+                    }
                 }
+                
+                NSString * jason_str = [NSString stringWithFormat:@"{\"last_modified_date\":\"%@\"}", last_modified_date];
+                NSData * jason_data = [jason_str dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * err = nil;
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:jason_data
+                                                                      options:nil
+                                                                        error:&err];
                 [IOSNDKHelper SendMessage:CPPFunctionToBeCalled
-                           WithParameters:nil];
+                           WithParameters:dict];
             } else {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
-//                                                                message:error.localizedDescription
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"Ok"
-//                                                      otherButtonTitles:nil];
-//                
-//                [alert show];
+                //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Score Error"
+                //                                                                message:error.localizedDescription
+                //                                                               delegate:nil
+                //                                                      cancelButtonTitle:@"Ok"
+                //                                                      otherButtonTitles:nil];
+                //
+                //                [alert show];
                 if ([CPPFunctionToBeCalled_Error compare:@"NO"] != NSOrderedSame) {
                     [IOSNDKHelper SendMessage:CPPFunctionToBeCalled_Error
                                WithParameters:nil];
                 }
             }
         });
-    }];   
+    }];
                        
 }
 
