@@ -38,8 +38,8 @@ public class TangoManager {
 
     void  initSDK() {
         Log.d("TangoSDKBridge", "TangoSDK is init from java, all tango features should be implemented in this class !");
-        
-       // AndroidNDKHelper.SetNDKReciever(this);
+        //大坑！ 这里必须要为 一个activity 可以接受的参数却要求一个object就可以
+       // AndroidNDKHelper.SetNDKReciever(context);
         
 //        String ns = context.NOTIFICATION_SERVICE;
 //        NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(ns);
@@ -61,9 +61,9 @@ public class TangoManager {
   //  }
     
     
-//     void authenticate(JSONObject prms){
-//    	 
-//     }
+     void authenticate(JSONObject prms){
+    	 Log.i("tango", "auth~~~~!");
+     }
 //     void authenticate_inst_tango(JSONObject prms){
 //    	 
 //     }
