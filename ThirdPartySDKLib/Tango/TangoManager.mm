@@ -977,9 +977,9 @@ static TangoManager *_tangoManager = nil;
                 NSString * jason_str = @"{\"leaderboard\":[";
                 
                 for(TangoLeaderboardEntry * entry in entries) {
-                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
-                        continue;
-                    }
+//                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
+//                        continue;
+//                    }
                     
                     if ([CPPFunctionToBeCalled_pic compare:@"NO"] != NSOrderedSame) {
                         if (!entry.profile.profilePictureIsPlaceholder) {
@@ -1106,9 +1106,9 @@ static TangoManager *_tangoManager = nil;
                 NSString * jason_str = @"{\"leaderboard\":[";
                 
                 for(TangoLeaderboardEntry * entry in entries) {
-                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
-                        continue;
-                    }
+//                    if ([entry.profile.supportedPlatforms containsObject:[NSNumber numberWithInt:TangoSdkPlatformAndroid]]) {
+//                        continue;
+//                    }
                     
                     NSString * jason_str_inner = [NSString stringWithFormat:@"{\"profile_id\":\"%@\",\"full_name\":\"%@\",\"metrics\":{",
                                                   entry.profile.profileID,
