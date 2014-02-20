@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSArray * possessions;
 @property (nonatomic, strong) NSMutableArray * friendProfileArray;
 
+@property (nonatomic, strong) NSString * tapjoy_callback;
+
 + (TangoManager *) sharedInstance;
 
 - (void)initSDK;
@@ -64,4 +66,7 @@
 
 //+ (NSString*)base64forData:(NSData*)theData;
 
+-(void)getTapPoints:(NSObject *)prms;
+-(void)getUpdatedPoints:(NSNotification*)notifyObj;
+-(void)spendTapPoints:(NSObject *)prms;
 @end

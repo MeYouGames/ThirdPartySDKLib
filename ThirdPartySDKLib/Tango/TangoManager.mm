@@ -10,6 +10,8 @@
 #import <TangoSDK/TangoSDK.h>
 #import "NSData+MBBase64.h"
 
+#import <Tapjoy/Tapjoy.h>
+
 static NSString * const kLeaderboardFunction = @"MAX_THIS_WEEK";
 static NSString * const kLeaderboardFunction_last_week = @"MAX_LAST_WEEK";
 static NSString * const kLeaderboardFunction_max = @"MAX";
@@ -1303,6 +1305,41 @@ static TangoManager *_tangoManager = nil;
     // C++ will recieve this message, only if the selector list will have a method
     // with the string we are passing
     [IOSNDKHelper SendMessage:CPPFunctionToBeCalled WithParameters:nil];
+}
+
+-(void)getTapPoints:(NSObject *)prms
+{
+    NSDictionary *parameters = (NSDictionary*)prms;
+     NSLog(@"getTapPoints Passed params are : %@", parameters);
+    [Tapjoy getTapPoints];
+    _tapjoy_callback  = [parameters objectForKey:@"callback"];
+    NSLog(@"_tapjoy_callback%@",_tapjoy_callback);
+    [_tapjoy_callback retain];
+    // A notification method must be set to retrieve the points.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUpdatedPoints:) name:TJC_TAP_POINTS_RESPONSE_NOTIFICATION object:nil];
+}
+
+-(void)getUpdatedPoints:(NSNotification*)notifyObj
+{
+    NSNumber *tapPoints = notifyObj.object;
+    NSString * tp = [tapPoints stringValue];
+//    NSString *tapPointsStr = [NSString stringWithFormat:@"Tap Points: %d", [tapPoints intValue]];
+    // Print out the updated points value.
+    NSLog(@"%@", tp);
+    NSLog(@"%@",_tapjoy_callback);
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:tp forKey:@"tap_point"];
+
+   // [dict setValue:tp forKey:@"tap_point"];
+    [IOSNDKHelper SendMessage:_tapjoy_callback WithParameters:dict];
+}
+
+-(void)spendTapPoints:(NSObject *)prms
+{
+    NSDictionary * dict_prms = (NSDictionary *)prms;
+    NSString * spend = [dict_prms objectForKey:@"spend"];
+    NSInteger i_spend = [spend integerValue];
+    
+    [Tapjoy spendTapPoints:i_spend];
 }
 
 @end

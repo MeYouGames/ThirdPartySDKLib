@@ -32,6 +32,7 @@
 		329FEE8E181006A80057DEC0 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 329FEE8C181006A80057DEC0 /* NSData+MBBase64.m */; };
 		8051197C180AFA97007E5EA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8051197B180AFA97007E5EA0 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		805119A7180B0D00007E5EA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805119A6180B0D00007E5EA0 /* UIKit.framework */; };
+		B298FED218AB6C8900D3C3FD /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B298FED118AB6C8900D3C3FD /* Tapjoy.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +77,8 @@
 		8051198D180AFADA007E5EA0 /* TangoSDKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangoSDKBridge.h; sourceTree = "<group>"; };
 		8051198E180AFADA007E5EA0 /* TangoSDKBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TangoSDKBridge.mm; sourceTree = "<group>"; };
 		805119A6180B0D00007E5EA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B298FED018AB6C8900D3C3FD /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
+		B298FED118AB6C8900D3C3FD /* Tapjoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tapjoy.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 				326CA12D180E91AA006AFE4E /* Security.framework in Frameworks */,
 				326CA12E180E91AA006AFE4E /* UIKit.framework in Frameworks */,
 				326CA12F180E91AA006AFE4E /* Foundation.framework in Frameworks */,
+				B298FED218AB6C8900D3C3FD /* Tapjoy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +124,7 @@
 		8051196F180AFA97007E5EA0 = {
 			isa = PBXGroup;
 			children = (
+				B298FECE18AB6C8900D3C3FD /* Tapjoy.embeddedframework */,
 				326CA20A180E96F1006AFE4E /* CoreVideo.framework */,
 				8051197D180AFA97007E5EA0 /* ThirdPartySDKLib */,
 				8051197A180AFA97007E5EA0 /* Frameworks */,
@@ -181,6 +186,24 @@
 				8051198C180AFADA007E5EA0 /* TangoManager.mm */,
 			);
 			path = Tango;
+			sourceTree = "<group>";
+		};
+		B298FECE18AB6C8900D3C3FD /* Tapjoy.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				B298FECF18AB6C8900D3C3FD /* Resources */,
+				B298FED118AB6C8900D3C3FD /* Tapjoy.framework */,
+			);
+			name = Tapjoy.embeddedframework;
+			path = ../../../../../Music/Tapjoy.embeddedframework;
+			sourceTree = "<group>";
+		};
+		B298FECF18AB6C8900D3C3FD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B298FED018AB6C8900D3C3FD /* TapjoyResources.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +299,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Music/Tapjoy.embeddedframework\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
@@ -314,6 +341,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/ThirdPartySDKLib.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Music/Tapjoy.embeddedframework\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartySDKLib/ThirdPartySDKLib-Prefix.pch";
